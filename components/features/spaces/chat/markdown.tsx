@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Latex from 'react-latex-next';
 import Marked, { ReactRenderer } from 'marked-react';
-import React, { useCallback, useMemo, useState, lazy, Suspense } from 'react';
+import React, { useCallback, useMemo, useState, lazy, Suspense, memo } from 'react';
 
 // Lazy load the syntax highlighter
 const SyntaxHighlighter = lazy(() =>
@@ -91,7 +91,7 @@ const preprocessLaTeX = (content: string) => {
     return processedContent;
 };
 
-const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
+const MarkdownRendererComponent: React.FC<MarkdownRendererProps> = ({ content }) => {
     // Preprocess content to find and normalize citation links before passing to marked
     const [processedContent, extractedCitations] = useMemo(() => {
         // Check cache first
@@ -582,6 +582,10 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
         </div>
     );
 };
+
+// Memoize by content only to avoid expensive re-processing when parent re-renders
+const MarkdownRenderer = memo(MarkdownRendererComponent, (prev, next) => prev.content === next.content);
+MarkdownRenderer.displayName = 'MarkdownRenderer';
 
 export const CopyButton = ({ text }: { text: string }) => {
     const [isCopied, setIsCopied] = useState(false);
