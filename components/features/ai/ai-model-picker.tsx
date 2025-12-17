@@ -7,11 +7,11 @@ import { motion } from 'framer-motion';
 const models = [
     {
         value: 'neuman-default',
-        label: 'GPT OSS 120b',
-        description: 'Default (OpenAI)',
-        provider: 'Groq',
-        color: 'blue',
-        isFree: true,
+        label: 'Gemini 3 Flash',
+        description: 'Default (Google)',
+        provider: 'Google',
+        color: 'gemini',
+        isFree: false,
     },
     {
         value: 'neuman-deepseek-free',
