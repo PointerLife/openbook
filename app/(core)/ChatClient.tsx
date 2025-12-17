@@ -51,6 +51,56 @@ interface Attachment {
 const SIDEBAR_WIDTH = 256; // 64 * 4 = 256px
 const SIDEBAR_WIDTH_SM = 240; // Smaller width for smaller screens
 
+// Lightweight debounce and throttle utilities (no external deps)
+function debounce<T extends (...args: any[]) => void>(fn: T, wait: number) {
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+    const debounced = (...args: Parameters<T>) => {
+        if (timeout) clearTimeout(timeout);
+        timeout = setTimeout(() => {
+            fn(...args);
+        }, wait);
+    };
+    (debounced as any).cancel = () => {
+        if (timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+        }
+    };
+    return debounced as T & { cancel: () => void };
+}
+
+function throttle<T extends (...args: any[]) => void>(fn: T, wait: number) {
+    let last = 0;
+    let timeout: ReturnType<typeof setTimeout> | null = null;
+    let lastArgs: Parameters<T> | null = null;
+    const throttled = (...args: Parameters<T>) => {
+        const now = Date.now();
+        const remaining = wait - (now - last);
+        lastArgs = args;
+        if (remaining <= 0) {
+            if (timeout) {
+                clearTimeout(timeout);
+                timeout = null;
+            }
+            last = now;
+            fn(...args);
+        } else if (!timeout) {
+            timeout = setTimeout(() => {
+                last = Date.now();
+                timeout = null;
+                if (lastArgs) fn(...lastArgs);
+            }, remaining);
+        }
+    };
+    (throttled as any).cancel = () => {
+        if (timeout) {
+            clearTimeout(timeout);
+            timeout = null;
+        }
+    };
+    return throttled as T & { cancel: () => void };
+}
+
 // Define WidgetSection outside of HomeContent to avoid recreating it on every render
 const WidgetSection: React.FC<{
     status: string;
@@ -494,31 +544,36 @@ const HomeContent = () => {
         console.log(`[SCROLL] Scrolling for ${displayMessages.length} display messages, status: ${status}`);
         scrollToBottom();
 
-        // Add a scroll listener to detect manual scrolling
-        const handleScroll = () => {
+        // Add a debounced scroll listener to detect manual scrolling
+        const debouncedScrollHandler = debounce(() => {
             if (!isAutoScrollingRef.current && status === 'streaming') {
                 const mobileAdjust = windowWidth < 640 ? 80 : 120;
-                const isAtBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - mobileAdjust;
-
-                // Set manual scroll flag only when user has scrolled up
+                const isAtBottom =
+                    window.innerHeight + window.scrollY >= document.body.offsetHeight - mobileAdjust;
                 setHasManuallyScrolled(!isAtBottom);
             }
-        };
+        }, 150);
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', debouncedScrollHandler);
+        return () => {
+            window.removeEventListener('scroll', debouncedScrollHandler);
+            (debouncedScrollHandler as any).cancel?.();
+        };
     }, [displayMessages, suggestedQuestions, status, windowWidth, hasManuallyScrolled]);
 
-    // Handle window resize without automatically toggling sidebar
+    // Handle window resize with throttling
     useEffect(() => {
         if (typeof window === 'undefined') return;
 
-        const handleResize = () => {
+        const throttledResizeHandler = throttle(() => {
             setWindowWidth(window.innerWidth);
-        };
+        }, 250);
 
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
+        window.addEventListener('resize', throttledResizeHandler);
+        return () => {
+            window.removeEventListener('resize', throttledResizeHandler);
+            (throttledResizeHandler as any).cancel?.();
+        };
     }, []);
 
     const AboutButton = () => {
