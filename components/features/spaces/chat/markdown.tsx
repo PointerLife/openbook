@@ -1,14 +1,20 @@
 import 'katex/dist/katex.min.css';
 
 import { GeistMono } from 'geist/font/mono';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneLight, oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useTheme } from 'next-themes';
 import Image from 'next/image';
 import Link from 'next/link';
 import Latex from 'react-latex-next';
 import Marked, { ReactRenderer } from 'marked-react';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState, lazy, Suspense } from 'react';
+
+// Lazy load the syntax highlighter
+const SyntaxHighlighter = lazy(() =>
+    import('react-syntax-highlighter').then((module) => ({
+        default: module.Prism,
+    })),
+);
 
 import { Button } from '@/components/ui/button';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
@@ -24,6 +30,9 @@ interface CitationLink {
     text: string;
     link: string;
 }
+
+// Create a cache for processed markdown content
+const markdownCache = new Map<string, string>();
 
 const isValidUrl = (str: string) => {
     try {
@@ -85,6 +94,12 @@ const preprocessLaTeX = (content: string) => {
 const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
     // Preprocess content to find and normalize citation links before passing to marked
     const [processedContent, extractedCitations] = useMemo(() => {
+        // Check cache first
+        const cacheKey = `markdown-${content.length}-${content.slice(0, 50)}`;
+        const cachedResult = markdownCache.get(cacheKey);
+        if (cachedResult) {
+            return JSON.parse(cachedResult) as [string, CitationLink[]];
+        }
         const citations: CitationLink[] = [];
         let modifiedContent = content;
 
@@ -178,7 +193,18 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
             return latexBlocks[parseInt(index)];
         });
 
-        return [modifiedContent, citations];
+        const result = [modifiedContent, citations] as [string, CitationLink[]];
+
+        // Cache result (limit cache size to 50 entries)
+        if (markdownCache.size > 50) {
+            const firstKey = markdownCache.keys().next().value;
+            if (firstKey) {
+                markdownCache.delete(firstKey);
+            }
+        }
+        markdownCache.set(cacheKey, JSON.stringify(result));
+
+        return result;
     }, [content]);
 
     const citationLinks = extractedCitations;
@@ -261,46 +287,54 @@ const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({ content }) => {
                             </button>
                         </div>
                     </div>
-                    <SyntaxHighlighter
-                        language={language || 'text'}
-                        style={theme === 'dark' ? oneDark : oneLight}
-                        customStyle={{
-                            margin: 0,
-                            padding: '0.75rem 0.25rem 0.75rem',
-                            backgroundColor: theme === 'dark' ? '#171717' : 'transparent',
-                            borderRadius: 0,
-                            borderBottomLeftRadius: '0.375rem',
-                            borderBottomRightRadius: '0.375rem',
-                            fontFamily: GeistMono.style.fontFamily,
-                        }}
-                        showLineNumbers={true}
-                        lineNumberStyle={{
-                            textAlign: 'right',
-                            color: theme === 'dark' ? '#6b7280' : '#808080',
-                            backgroundColor: 'transparent',
-                            fontStyle: 'normal',
-                            marginRight: '1em',
-                            paddingRight: '0.5em',
-                            fontFamily: GeistMono.style.fontFamily,
-                            minWidth: '2em',
-                        }}
-                        lineNumberContainerStyle={{
-                            backgroundColor: theme === 'dark' ? '#171717' : '#f5f5f5',
-                            float: 'left',
-                        }}
-                        wrapLongLines={isWrapped}
-                        codeTagProps={{
-                            style: {
-                                fontFamily: GeistMono.style.fontFamily,
-                                fontSize: '0.85em',
-                                whiteSpace: isWrapped ? 'pre-wrap' : 'pre',
-                                overflowWrap: isWrapped ? 'break-word' : 'normal',
-                                wordBreak: isWrapped ? 'break-word' : 'keep-all',
-                            },
-                        }}
+                    <Suspense
+                        fallback={
+                            <pre className="p-3 text-sm bg-neutral-100 dark:bg-neutral-800 rounded-b-md">
+                                <code>{children}</code>
+                            </pre>
+                        }
                     >
-                        {children}
-                    </SyntaxHighlighter>
+                        <SyntaxHighlighter
+                            language={language || 'text'}
+                            style={theme === 'dark' ? oneDark : oneLight}
+                            customStyle={{
+                                margin: 0,
+                                padding: '0.75rem 0.25rem 0.75rem',
+                                backgroundColor: theme === 'dark' ? '#171717' : 'transparent',
+                                borderRadius: 0,
+                                borderBottomLeftRadius: '0.375rem',
+                                borderBottomRightRadius: '0.375rem',
+                                fontFamily: GeistMono.style.fontFamily,
+                            }}
+                            showLineNumbers={true}
+                            lineNumberStyle={{
+                                textAlign: 'right',
+                                color: theme === 'dark' ? '#6b7280' : '#808080',
+                                backgroundColor: 'transparent',
+                                fontStyle: 'normal',
+                                marginRight: '1em',
+                                paddingRight: '0.5em',
+                                fontFamily: GeistMono.style.fontFamily,
+                                minWidth: '2em',
+                            }}
+                            lineNumberContainerStyle={{
+                                backgroundColor: theme === 'dark' ? '#171717' : '#f5f5f5',
+                                float: 'left',
+                            }}
+                            wrapLongLines={isWrapped}
+                            codeTagProps={{
+                                style: {
+                                    fontFamily: GeistMono.style.fontFamily,
+                                    fontSize: '0.85em',
+                                    whiteSpace: isWrapped ? 'pre-wrap' : 'pre',
+                                    overflowWrap: isWrapped ? 'break-word' : 'normal',
+                                    wordBreak: isWrapped ? 'break-word' : 'keep-all',
+                                },
+                            }}
+                        >
+                            {children}
+                        </SyntaxHighlighter>
+                    </Suspense>
                 </div>
             </div>
         );

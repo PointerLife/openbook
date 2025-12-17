@@ -37,7 +37,7 @@ interface MessageProps {
     suggestedQuestions: string[];
 }
 
-export const Message: React.FC<MessageProps> = ({
+const Message: React.FC<MessageProps> = ({
     message,
     index,
     lastUserMessageIndex,
@@ -445,3 +445,7 @@ export const AttachmentsBadge = ({ attachments }: { attachments: any[] }) => {
         </>
     );
 };
+
+Message.displayName = 'Message';
+
+export { Message };

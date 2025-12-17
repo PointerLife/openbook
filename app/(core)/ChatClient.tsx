@@ -137,19 +137,18 @@ const HomeContent = () => {
     const [windowWidth, setWindowWidth] = useState<number>(() =>
         typeof window !== 'undefined' ? window.innerWidth : 1024,
     );
-    const [sidebarOpen, setSidebarOpen] = useState(true);
-
-    // Ensure sidebar state is consistent across navigation
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            // Get saved state from localStorage
+    // Use cached localStorage for sidebar state to avoid synchronous reads on every render
+    const [sidebarOpen, setSidebarOpen] = useState(() => {
+        if (typeof window === 'undefined') return true;
+        try {
             const savedState = localStorage.getItem(SIDEBAR_STATE_KEY);
-            if (savedState !== null) {
-                const isOpen = savedState === 'true';
-                setSidebarOpen(isOpen);
-            }
+            return savedState !== null ? savedState === 'true' : true;
+        } catch {
+            return true;
         }
-    }, [currentSpaceId]); // Re-run when space changes
+    });
+
+    // Sidebar state is now initialized directly from localStorage to avoid re-reads
 
     // Update localStorage when sidebar state changes
     useEffect(() => {
@@ -198,89 +197,93 @@ const HomeContent = () => {
     }, [currentSpaceId, setStudyMode]);
 
     // Handle conversation compacting (summarize, create new space, reset context)
-    const handleCompactSpace = useCallback(async (spaceId: string) => {
-        if (process.env.NODE_ENV === 'development') {
-            console.log(`[COMPACT] Starting compact process for space: ${spaceId}`);
-        }
-        
-        const space = currentSpace;
-        if (!space || space.messages.length === 0) {
+    const handleCompactSpace = useCallback(
+        async (spaceId: string) => {
             if (process.env.NODE_ENV === 'development') {
-                console.error(`[COMPACT] No conversation to compact - space: ${space?.name}, messages: ${space?.messages?.length}`);
-            }
-            throw new Error('No conversation to compact');
-        }
-
-        if (process.env.NODE_ENV === 'development') {
-            console.log(`[COMPACT] Compacting ${space.messages.length} messages from space: ${space.name}`);
-        }
-
-        try {
-            // Call the compact API
-            const response = await fetch('/api/chat/compact', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ messages: space.messages }),
-            });
-
-            if (!response.ok) {
-                throw new Error(`API failed with status: ${response.status}`);
+                console.log(`[COMPACT] Starting compact process for space: ${spaceId}`);
             }
 
-            const { summary, title } = await response.json();
+            const space = currentSpace;
+            if (!space || space.messages.length === 0) {
+                if (process.env.NODE_ENV === 'development') {
+                    console.error(
+                        `[COMPACT] No conversation to compact - space: ${space?.name}, messages: ${space?.messages?.length}`,
+                    );
+                }
+                throw new Error('No conversation to compact');
+            }
+
             if (process.env.NODE_ENV === 'development') {
-                console.log(`[COMPACT] Generated summary for: "${title}"`);
+                console.log(`[COMPACT] Compacting ${space.messages.length} messages from space: ${space.name}`);
             }
 
-            // Create new space with the summary
-            const newSpaceId = createSpace(`${title} (Continued)`);
-            if (newSpaceId) {
-                if (process.env.NODE_ENV === 'development') {
-                    console.log(`[COMPACT] Created new space: ${newSpaceId}`);
-                }
-                
-                // Switch to the new space first and wait for state to update
-                await switchSpace(newSpaceId);
-                if (process.env.NODE_ENV === 'development') {
-                    console.log(`[COMPACT] Switched to new space: ${newSpaceId}`);
-                }
-                
-                // Add the summary as the first message in the new space
-                const summaryMessage: ChatMessage = {
-                    id: crypto.randomUUID(),
-                    role: 'assistant',
-                    content: `**Previous Conversation Summary:**\n\n${summary}\n\n---\n\nHow can I help you continue from here?`,
-                    timestamp: Date.now(),
-                };
-                
-                // Add the summary message to the new space
-                addMessage(summaryMessage);
-                if (process.env.NODE_ENV === 'development') {
-                    console.log(`[COMPACT] Added summary message to new space`);
+            try {
+                // Call the compact API
+                const response = await fetch('/api/chat/compact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ messages: space.messages }),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API failed with status: ${response.status}`);
                 }
 
-                // CRITICAL: Reset useChat context for the original space
-                // We need to mark this space as "context-reset" so it doesn't inherit history
-                // Store this in space metadata to prevent context bleeding
-                markSpaceContextReset(spaceId);
+                const { summary, title } = await response.json();
                 if (process.env.NODE_ENV === 'development') {
-                    console.log(`[COMPACT] Marked original space ${spaceId} as context-reset`);
+                    console.log(`[COMPACT] Generated summary for: "${title}"`);
                 }
-            }
 
-            // Clear study mode for the original space
-            setStudyMode(null, spaceId);
-            if (process.env.NODE_ENV === 'development') {
-                console.log(`[COMPACT] Cleared study mode for original space: ${spaceId}`);
+                // Create new space with the summary
+                const newSpaceId = createSpace(`${title} (Continued)`);
+                if (newSpaceId) {
+                    if (process.env.NODE_ENV === 'development') {
+                        console.log(`[COMPACT] Created new space: ${newSpaceId}`);
+                    }
+
+                    // Switch to the new space first and wait for state to update
+                    await switchSpace(newSpaceId);
+                    if (process.env.NODE_ENV === 'development') {
+                        console.log(`[COMPACT] Switched to new space: ${newSpaceId}`);
+                    }
+
+                    // Add the summary as the first message in the new space
+                    const summaryMessage: ChatMessage = {
+                        id: crypto.randomUUID(),
+                        role: 'assistant',
+                        content: `**Previous Conversation Summary:**\n\n${summary}\n\n---\n\nHow can I help you continue from here?`,
+                        timestamp: Date.now(),
+                    };
+
+                    // Add the summary message to the new space
+                    addMessage(summaryMessage);
+                    if (process.env.NODE_ENV === 'development') {
+                        console.log(`[COMPACT] Added summary message to new space`);
+                    }
+
+                    // CRITICAL: Reset useChat context for the original space
+                    // We need to mark this space as "context-reset" so it doesn't inherit history
+                    // Store this in space metadata to prevent context bleeding
+                    markSpaceContextReset(spaceId);
+                    if (process.env.NODE_ENV === 'development') {
+                        console.log(`[COMPACT] Marked original space ${spaceId} as context-reset`);
+                    }
+                }
+
+                // Clear study mode for the original space
+                setStudyMode(null, spaceId);
+                if (process.env.NODE_ENV === 'development') {
+                    console.log(`[COMPACT] Cleared study mode for original space: ${spaceId}`);
+                }
+            } catch (error) {
+                if (process.env.NODE_ENV === 'development') {
+                    console.error(`[COMPACT] Error during compact:`, error);
+                }
+                throw error;
             }
-            
-        } catch (error) {
-            if (process.env.NODE_ENV === 'development') {
-                console.error(`[COMPACT] Error during compact:`, error);
-            }
-            throw error;
-        }
-    }, [currentSpace, createSpace, switchSpace, addMessage, setStudyMode, markSpaceContextReset]);
+        },
+        [currentSpace, createSpace, switchSpace, addMessage, setStudyMode, markSpaceContextReset],
+    );
 
     const chatOptions: UseChatOptions = useMemo(() => {
         // Determine API endpoint based on study mode
@@ -361,7 +364,9 @@ const HomeContent = () => {
         if (currentSpace?.messages) {
             // Check if this space has been marked for context reset
             if (currentSpace.metadata?.contextReset) {
-                console.log(`[CONTEXT] Space ${currentSpaceId} marked for context reset - clearing LLM context but keeping messages visible`);
+                console.log(
+                    `[CONTEXT] Space ${currentSpaceId} marked for context reset - clearing LLM context but keeping messages visible`,
+                );
                 // Keep messages visible in UI but don't send them to LLM context
                 // The messages will be shown but useChat will start with empty context
                 const sortedMessages = [...currentSpace.messages].sort((a, b) => a.timestamp - b.timestamp);
@@ -369,7 +374,9 @@ const HomeContent = () => {
                 // Note: We still show messages in the UI through the Messages component which uses currentSpace.messages
             } else {
                 // Normal case: sync all messages to LLM context
-                console.log(`[CONTEXT] Syncing ${currentSpace.messages.length} messages to LLM context for space: ${currentSpaceId}`);
+                console.log(
+                    `[CONTEXT] Syncing ${currentSpace.messages.length} messages to LLM context for space: ${currentSpaceId}`,
+                );
                 const sortedMessages = [...currentSpace.messages].sort((a, b) => a.timestamp - b.timestamp);
                 setMessages(sortedMessages);
             }
@@ -428,14 +435,16 @@ const HomeContent = () => {
     const displayMessages = useMemo(() => {
         if (currentSpace?.metadata?.contextReset) {
             // For context-reset spaces, show all messages from space but useChat context is empty
-            console.log(`[DISPLAY] Using space messages for context-reset space: ${currentSpace.messages.length} messages`);
+            console.log(
+                `[DISPLAY] Using space messages for context-reset space: ${currentSpace.messages.length} messages`,
+            );
             return [...currentSpace.messages].sort((a, b) => a.timestamp - b.timestamp);
         } else {
             // For normal spaces, use useChat messages
             console.log(`[DISPLAY] Using useChat messages for normal space: ${messages.length} messages`);
             return messages;
         }
-    }, [currentSpace, messages]);
+    }, [currentSpace?.metadata?.contextReset, currentSpace?.messages, messages]);
 
     const lastUserMessageIndex = useMemo(() => {
         for (let i = displayMessages.length - 1; i >= 0; i--) {
@@ -567,8 +576,6 @@ const HomeContent = () => {
     const isProcessing = useMemo(() => {
         return status !== 'ready';
     }, [status]);
-
-
 
     return (
         <div className="flex flex-col !font-sans items-center min-h-screen bg-background text-foreground transition-all duration-500">

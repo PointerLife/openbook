@@ -97,94 +97,99 @@ const Messages: React.FC<MessagesProps> = ({
     // Add state for advanced progress
     const [showAdvancedProgress, setShowAdvancedProgress] = useState<boolean>(false);
 
-    // Update thinking duration counter
+    // Consolidated effect for all timing and progress updates
     useEffect(() => {
-        let interval: NodeJS.Timeout;
+        const timers: NodeJS.Timeout[] = [];
 
+        // Handle thinking duration
         if (isJustThinking) {
-            // Start thinking timer
             if (!thinkingStartTime.current) {
                 thinkingStartTime.current = Date.now();
             }
 
-            interval = setInterval(() => {
+            const thinkingTimer = setInterval(() => {
                 if (thinkingStartTime.current) {
                     const elapsed = Math.floor((Date.now() - thinkingStartTime.current) / 1000);
                     setThinkingDuration(elapsed);
                 }
-            }, 1000);
+            }, 2000); // Reduced from 1000ms to 2000ms
+            timers.push(thinkingTimer);
         } else {
-            // Reset when not thinking
             thinkingStartTime.current = null;
             setThinkingDuration(0);
         }
 
-        return () => {
-            if (interval) clearInterval(interval);
-        };
-    }, [isJustThinking]);
-
-    // Update streaming progress
-    useEffect(() => {
-        let interval: NodeJS.Timeout;
-
+        // Handle stream progress and token counting
         if (isStreaming) {
-            // Start streaming timer
             if (!streamStartTime.current) {
                 streamStartTime.current = Date.now();
-                setStreamProgress(5); // Start with 5% progress
+                setStreamProgress(5);
             }
 
-            interval = setInterval(() => {
+            const streamTimer = setInterval(() => {
                 if (streamStartTime.current) {
                     const elapsed = Date.now() - streamStartTime.current;
-                    // Calculate progress as a percentage of estimated duration, capped at 95%
+
+                    // Update progress
                     const progress = Math.min(95, Math.floor((elapsed / estimatedStreamDuration) * 100));
                     setStreamProgress(progress);
+
+                    // Update token count based on most recent assistant message
+                    const lastAssistantMessage = messages.findLast((m) => m.role === 'assistant');
+                    if (lastAssistantMessage?.content && elapsed > 2000) {
+                        const words = lastAssistantMessage.content.trim().split(/\s+/).length;
+                        const currentTokenCount = Math.round(words * 1.3);
+                        setTokenCount(currentTokenCount);
+
+                        // Update estimated total based on current rate
+                        const tokensPerMs = currentTokenCount / elapsed;
+                        setEstimatedTokens(Math.max(500, Math.round(tokensPerMs * estimatedStreamDuration * 0.8)));
+                    }
                 }
-            }, 300);
+            }, 500); // Reduced from 300ms to 500ms for fewer updates
+            timers.push(streamTimer);
         } else if (status === 'ready') {
-            // Complete progress when finished
             setStreamProgress(100);
-            // Reset after animation completes
             setTimeout(() => {
                 streamStartTime.current = null;
                 setStreamProgress(0);
-            }, 1000);
-        }
-
-        return () => {
-            if (interval) clearInterval(interval);
-        };
-    }, [isStreaming, status]);
-
-    // Update token count during streaming
-    useEffect(() => {
-        if (isStreaming) {
-            // Estimate token count based on most recent assistant message
-            const lastAssistantMessage = messages.findLast((m) => m.role === 'assistant');
-            if (lastAssistantMessage?.content) {
-                // Rough estimation: ~1.3 tokens per word
-                const words = lastAssistantMessage.content.trim().split(/\s+/).length;
-                setTokenCount(Math.round(words * 1.3));
-
-                // Update estimated total based on current progress
-                const elapsed = streamStartTime.current ? Date.now() - streamStartTime.current : 0;
-                if (elapsed > 2000) {
-                    // Only estimate after 2 seconds to avoid wild guesses
-                    // Estimate total tokens based on current rate and 80% of expected duration
-                    const tokensPerMs = tokenCount / elapsed;
-                    setEstimatedTokens(Math.max(500, Math.round(tokensPerMs * estimatedStreamDuration * 0.8)));
-                }
-            }
-        } else if (status === 'ready') {
-            // Reset after completion
-            setTimeout(() => {
                 setTokenCount(0);
                 setEstimatedTokens(500);
             }, 1000);
         }
-    }, [isStreaming, messages, status, tokenCount]);
+
+        // Handle reasoning timing updates (reduced frequency from 100ms to 500ms)
+        const activeReasoningSections = Object.entries(reasoningTimings).filter(([_, timing]) => !timing.endTime);
+        if (activeReasoningSections.length > 0) {
+            const reasoningTimer = setInterval(() => {
+                const now = Date.now();
+                const updatedTimes: Record<string, number> = {};
+
+                activeReasoningSections.forEach(([key, timing]) => {
+                    updatedTimes[key] = (now - timing.startTime) / 1000;
+                });
+
+                // Update reasoning timings if needed
+                // Note: This is a simplified version - the original had more complex logic
+            }, 500); // Reduced from 100ms to 500ms
+            timers.push(reasoningTimer);
+        }
+
+        // Handle advanced progress timeout
+        if (isLoading) {
+            const progressTimeout = setTimeout(() => {
+                setShowAdvancedProgress(true);
+            }, 5000);
+            timers.push(progressTimeout);
+        } else {
+            setShowAdvancedProgress(false);
+        }
+
+        // Cleanup all timers
+        return () => {
+            timers.forEach((timer) => clearInterval(timer));
+        };
+    }, [isJustThinking, isStreaming, status, messages, reasoningTimings, isLoading]);
 
     // Filter messages to only show the ones we want to display
     const memoizedMessages = useMemo(() => {
@@ -284,9 +289,9 @@ const Messages: React.FC<MessagesProps> = ({
                                 <h2 className="text-md font-medium text-neutral-800 dark:text-neutral-200 flex items-center gap-2">
                                     Neuman
                                     {/* Show loading dots while AI is responding */}
-                                    {status !== 'ready' && message.role === 'assistant' && messageIndex === messages.length - 1 && (
-                                        <LoadingDots />
-                                    )}
+                                    {status !== 'ready' &&
+                                        message.role === 'assistant' &&
+                                        messageIndex === messages.length - 1 && <LoadingDots />}
                                 </h2>
                             </div>
                             {status === 'ready' && (
@@ -402,30 +407,7 @@ const Messages: React.FC<MessagesProps> = ({
         }
     }, [messages]);
 
-    // For active reasoning sections, update timers every 100ms
-    useEffect(() => {
-        // Only run this effect when reasoning is occurring
-        const activeReasoningSections = Object.entries(reasoningTimings).filter(([_, timing]) => !timing.endTime);
-
-        if (activeReasoningSections.length === 0) return;
-
-        // Update once immediately
-        const updateTimes = () => {
-            const now = Date.now();
-            const updatedTimes: Record<string, number> = {};
-
-            activeReasoningSections.forEach(([key, timing]) => {
-                updatedTimes[key] = (now - timing.startTime) / 1000;
-            });
-        };
-
-        updateTimes();
-
-        // Then set up interval for updates
-        const interval = setInterval(updateTimes, 100);
-        return () => clearInterval(interval);
-    }, [reasoningTimings]);
-
+    // Initialize reasoning timings when messages change
     useEffect(() => {
         messages.forEach((message, messageIndex) => {
             message.parts?.forEach((part: any, partIndex: number) => {
@@ -451,24 +433,6 @@ const Messages: React.FC<MessagesProps> = ({
             });
         });
     }, [messages, reasoningTimings]);
-
-    // Add timeout to show advanced progress for long-running requests
-    useEffect(() => {
-        let timeout: NodeJS.Timeout;
-
-        if (isLoading) {
-            // Show advanced progress after 5 seconds of loading
-            timeout = setTimeout(() => {
-                setShowAdvancedProgress(true);
-            }, 5000);
-        } else {
-            setShowAdvancedProgress(false);
-        }
-
-        return () => {
-            if (timeout) clearTimeout(timeout);
-        };
-    }, [isLoading]);
 
     if (memoizedMessages.length === 0) {
         return null;
