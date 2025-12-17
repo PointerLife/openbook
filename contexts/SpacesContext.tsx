@@ -328,16 +328,7 @@ export const SpacesProvider = ({ children }: { children: ReactNode }) => {
             const defaultNotebook = currentNotebooks.length > 0 ? currentNotebooks[0] : undefined;
             // Find the space we're deleting (with latest state)
             const spaceToDelete = prevSpaces.find((s) => s.id === id);
-            // Prevent deletion of the default Untitled space in the default notebook
-            if (
-                spaceToDelete?.notebook_id === defaultNotebook?.id &&
-                spaceToDelete?.name === 'Untitled'
-            ) {
-                if (process.env.NODE_ENV !== 'production') {
-                    console.log('Cannot delete the default Untitled space');
-                }
-                return prevSpaces;
-            }
+            // Limit check removed to allow deleting 'Untitled' spaces
             // If the deleted space is NOT the current space, we just return the filtered result
             if (currentSpaceId !== id) {
                 return filteredSpaces;
@@ -389,15 +380,15 @@ export const SpacesProvider = ({ children }: { children: ReactNode }) => {
             prev.map((s) =>
                 s.id === id
                     ? {
-                          ...s,
-                          name,
-                          updatedAt: Date.now(),
-                          metadata: {
-                              ...(s.metadata || {}),
-                              manuallyRenamed: isManualRename, // Mark if this was a manual rename
-                              isGeneratingName: false, // Not generating if manually renamed
-                          },
-                      }
+                        ...s,
+                        name,
+                        updatedAt: Date.now(),
+                        metadata: {
+                            ...(s.metadata || {}),
+                            manuallyRenamed: isManualRename, // Mark if this was a manual rename
+                            isGeneratingName: false, // Not generating if manually renamed
+                        },
+                    }
                     : s,
             ),
         );
@@ -413,13 +404,13 @@ export const SpacesProvider = ({ children }: { children: ReactNode }) => {
             prev.map((s) =>
                 s.id === id
                     ? {
-                          ...s,
-                          metadata: {
-                              ...(s.metadata || {}),
-                              manuallyRenamed: false,
-                              isGeneratingName: true,
-                          },
-                      }
+                        ...s,
+                        metadata: {
+                            ...(s.metadata || {}),
+                            manuallyRenamed: false,
+                            isGeneratingName: true,
+                        },
+                    }
                     : s,
             ),
         );
@@ -430,15 +421,15 @@ export const SpacesProvider = ({ children }: { children: ReactNode }) => {
                 prev.map((s) =>
                     s.id === id
                         ? {
-                              ...s,
-                              name: newName,
-                              metadata: {
-                                  ...(s.metadata || {}),
-                                  manuallyRenamed: false,
-                                  isGeneratingName: false,
-                                  lastAutoNameUpdate: Date.now(),
-                              },
-                          }
+                            ...s,
+                            name: newName,
+                            metadata: {
+                                ...(s.metadata || {}),
+                                manuallyRenamed: false,
+                                isGeneratingName: false,
+                                lastAutoNameUpdate: Date.now(),
+                            },
+                        }
                         : s,
                 ),
             );
@@ -450,12 +441,12 @@ export const SpacesProvider = ({ children }: { children: ReactNode }) => {
             prev.map((s) =>
                 s.id === id
                     ? {
-                          ...s,
-                          metadata: {
-                              ...(s.metadata || { manuallyRenamed: false }),
-                              pinned: !s.metadata?.pinned,
-                          },
-                      }
+                        ...s,
+                        metadata: {
+                            ...(s.metadata || { manuallyRenamed: false }),
+                            pinned: !s.metadata?.pinned,
+                        },
+                    }
                     : s,
             ),
         );
@@ -490,10 +481,10 @@ export const SpacesProvider = ({ children }: { children: ReactNode }) => {
                     prev.map((s) =>
                         s.id === existingDefault.id
                             ? {
-                                  ...s,
-                                  messages: [...s.messages, newMessageToAdd],
-                                  updatedAt: spaceUpdateTimestamp,
-                              }
+                                ...s,
+                                messages: [...s.messages, newMessageToAdd],
+                                updatedAt: spaceUpdateTimestamp,
+                            }
                             : s,
                     ),
                 );
@@ -578,14 +569,14 @@ export const SpacesProvider = ({ children }: { children: ReactNode }) => {
             prev.map((s) =>
                 s.id === id
                     ? {
-                          ...s,
-                          updatedAt: Date.now(),
-                          metadata: {
-                              ...(s.metadata || {}),
-                              manuallyRenamed: s.metadata?.manuallyRenamed ?? false,
-                              contextReset: true,
-                          },
-                      }
+                        ...s,
+                        updatedAt: Date.now(),
+                        metadata: {
+                            ...(s.metadata || {}),
+                            manuallyRenamed: s.metadata?.manuallyRenamed ?? false,
+                            contextReset: true,
+                        },
+                    }
                     : s,
             ),
         );

@@ -352,7 +352,7 @@ export default function SidebarNotebook({ notebook, currentPageType, currentPage
                                                         style={{
                                                             color:
                                                                 currentPageType === 'journal' &&
-                                                                currentPageId === entry.id
+                                                                    currentPageId === entry.id
                                                                     ? 'var(--tw-color-emerald-600)'
                                                                     : 'var(--tw-color-neutral-600)',
                                                         }}
@@ -440,7 +440,7 @@ export default function SidebarNotebook({ notebook, currentPageType, currentPage
                                                 className={cn(
                                                     'flex w-full items-center cursor-pointer',
                                                     (currentPageType === 'space' && currentPageId === space.id) ||
-                                                    (currentPageType === '' && currentSpaceId === space.id)
+                                                        (currentPageType === '' && currentSpaceId === space.id)
                                                         ? 'bg-emerald-50 dark:bg-emerald-900/20'
                                                         : '',
                                                 )}
@@ -467,7 +467,7 @@ export default function SidebarNotebook({ notebook, currentPageType, currentPage
                                                         style={{
                                                             color:
                                                                 (currentPageType === 'space' && currentPageId === space.id) ||
-                                                                (currentPageType === '' && currentSpaceId === space.id)
+                                                                    (currentPageType === '' && currentSpaceId === space.id)
                                                                     ? 'var(--tw-color-emerald-600)'
                                                                     : 'var(--tw-color-neutral-600)',
                                                         }}
