@@ -37,8 +37,7 @@ interface MessagesProps {
     setMessages: (messages: any[]) => void;
     append: (message: any, options?: any) => Promise<string | null | undefined>;
     reload: () => Promise<string | null | undefined>;
-    suggestedQuestions: string[];
-    setSuggestedQuestions: (questions: string[]) => void;
+
     status: string;
     error: any; // Add error from useChat
 }
@@ -61,8 +60,7 @@ const Messages: React.FC<MessagesProps> = ({
     setMessages,
     append,
     reload,
-    suggestedQuestions,
-    setSuggestedQuestions,
+
     status,
     error,
 }) => {
@@ -306,7 +304,7 @@ const Messages: React.FC<MessagesProps> = ({
                                             // Remove the last assistant message
                                             const newMessages = messages.slice(0, -1);
                                             setMessages(newMessages);
-                                            setSuggestedQuestions([]);
+
 
                                             // Resubmit the last user message
                                             reload();
@@ -449,7 +447,7 @@ const Messages: React.FC<MessagesProps> = ({
             newMessages.pop();
         }
         setMessages(newMessages);
-        setSuggestedQuestions([]);
+
 
         // Reset thinking timer
         thinkingStartTime.current = null;
@@ -513,8 +511,7 @@ const Messages: React.FC<MessagesProps> = ({
                             setMessages={setMessages}
                             append={append}
                             reload={reload}
-                            setSuggestedQuestions={setSuggestedQuestions}
-                            suggestedQuestions={suggestedQuestions}
+
                         />
 
                         {/* Render typing animation for this message if needed */}

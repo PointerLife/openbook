@@ -29,7 +29,7 @@ import { InstallPrompt } from '@/components/modals/InstallPrompt';
 import { useLocalStorage } from '@/hooks/use-local-storage';
 import { cn, getUserId, SearchGroupId } from '@/lib/utils';
 import { SIDEBAR_STATE_KEY, SELECTED_MODEL_KEY } from '@/lib/storageKeys';
-import { suggestQuestions } from '../(config)/actions';
+
 import Messages from '@/components/features/spaces/chat/messages';
 import { Input } from '@/components/ui/input';
 import Sidebar from '@/components/layout/sidebar';
@@ -173,7 +173,7 @@ const HomeContent = () => {
 
     const lastSubmittedQueryRef = useRef(initialState.query);
     const bottomRef = useRef<HTMLDivElement>(null);
-    const [suggestedQuestions, setSuggestedQuestions] = useState<string[]>([]);
+
     const [isEditingMessage, setIsEditingMessage] = useState(false);
     const [editingMessageIndex, setEditingMessageIndex] = useState(-1);
     const [attachments, setAttachments] = useState<Attachment[]>([]);
@@ -359,12 +359,7 @@ const HomeContent = () => {
                         timestamp: aiMessageFromSDK.createdAt ? aiMessageFromSDK.createdAt.getTime() : Date.now(),
                     };
                     spaceFunctionsRef.current.addMessage(assistantChatMessage);
-                    const newHistory = [
-                        { role: 'user', content: lastSubmittedQueryRef.current },
-                        { role: 'assistant', content: assistantChatMessage.content },
-                    ];
-                    const { questions } = await suggestQuestions(newHistory);
-                    setSuggestedQuestions(questions);
+
                 }
             },
             onError: (error) => {
@@ -559,7 +554,7 @@ const HomeContent = () => {
             window.removeEventListener('scroll', debouncedScrollHandler);
             (debouncedScrollHandler as any).cancel?.();
         };
-    }, [displayMessages, suggestedQuestions, status, windowWidth, hasManuallyScrolled]);
+    }, [displayMessages, status, windowWidth, hasManuallyScrolled]);
 
     // Handle window resize with throttling
     useEffect(() => {
@@ -623,9 +618,7 @@ const HomeContent = () => {
         [setSelectedModel],
     );
 
-    const resetSuggestedQuestions = useCallback(() => {
-        setSuggestedQuestions([]);
-    }, []);
+
 
     // Helper function to determine if content is being processed/loaded
     const isProcessing = useMemo(() => {
@@ -749,9 +742,8 @@ const HomeContent = () => {
                                     setEditingMessageIndex={setEditingMessageIndex}
                                     setMessages={updateMessages}
                                     append={appendWithPersist}
+
                                     reload={reload}
-                                    suggestedQuestions={suggestedQuestions}
-                                    setSuggestedQuestions={setSuggestedQuestions}
                                     status={status}
                                     error={error}
                                 />

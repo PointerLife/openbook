@@ -33,8 +33,7 @@ interface MessageProps {
     setMessages: (messages: any[]) => void;
     append: (message: any, options?: any) => Promise<string | null | undefined>;
     reload: () => Promise<string | null | undefined>;
-    setSuggestedQuestions: (questions: string[]) => void;
-    suggestedQuestions: string[];
+
 }
 
 const Message: React.FC<MessageProps> = ({
@@ -53,8 +52,7 @@ const Message: React.FC<MessageProps> = ({
     setMessages,
     append,
     reload,
-    setSuggestedQuestions,
-    suggestedQuestions,
+
 }) => {
     // Move handlers inside the component
     const handleMessageEdit = useCallback(
@@ -86,7 +84,7 @@ const Message: React.FC<MessageProps> = ({
                 setInput('');
 
                 // Reset suggested questions
-                setSuggestedQuestions([]);
+
 
                 // Extract attachments from the original message
                 const attachments = originalMessage?.experimental_attachments || [];
@@ -116,23 +114,13 @@ const Message: React.FC<MessageProps> = ({
             setMessages,
             setInput,
             append,
-            setSuggestedQuestions,
+
             setIsEditingMessage,
             setEditingMessageIndex,
         ],
     );
 
-    const handleSuggestedQuestionClick = useCallback(
-        async (question: string) => {
-            setSuggestedQuestions([]);
 
-            await append({
-                content: question.trim(),
-                role: 'user',
-            });
-        },
-        [append, setSuggestedQuestions],
-    );
 
     const handleRegenerate = useCallback(async () => {
         if (status !== 'ready') {
@@ -146,11 +134,11 @@ const Message: React.FC<MessageProps> = ({
         // Remove the last assistant message
         const newMessages = messages.slice(0, -1);
         setMessages(newMessages);
-        setSuggestedQuestions([]);
+
 
         // Resubmit the last user message
         await reload();
-    }, [status, messages, setMessages, reload, setSuggestedQuestions]);
+    }, [status, messages, setMessages, reload]);
 
     if (message.role === 'user') {
         return (
@@ -256,33 +244,7 @@ const Message: React.FC<MessageProps> = ({
                     renderPart(part, index, partIndex, message.parts as MessagePart[], message),
                 )}
 
-                {/* Add suggested questions if this is the last message */}
-                {suggestedQuestions.length > 0 && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.4, ease: 'easeOut', delay: 0.2 }}
-                        className="w-full max-w-xl sm:max-w-2xl mt-6"
-                    >
-                        <div className="flex items-center gap-2 mb-4">
-                            <h2 className="font-medium text-neutral-800 dark:text-neutral-200">
-                                More Curated Questions
-                            </h2>
-                        </div>
-                        <div className="space-y-2 flex flex-col">
-                            {suggestedQuestions.map((question, i) => (
-                                <Button
-                                    key={i}
-                                    variant="ghost"
-                                    className="w-fit font-medium rounded-2xl p-1 justify-start text-left h-auto py-2 px-4 bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 hover:bg-neutral-200 dark:hover:bg-neutral-700 whitespace-normal max-w-full"
-                                    onClick={() => handleSuggestedQuestionClick(question)}
-                                >
-                                    {question}
-                                </Button>
-                            ))}
-                        </div>
-                    </motion.div>
-                )}
+
             </>
         );
     }
@@ -412,11 +374,10 @@ export const AttachmentsBadge = ({ attachments }: { attachments: any[] }) => {
                                         <button
                                             key={idx}
                                             onClick={() => setSelectedIndex(idx)}
-                                            className={`relative h-12 w-12 rounded-md overflow-hidden shrink-0 transition-all ${
-                                                selectedIndex === idx
+                                            className={`relative h-12 w-12 rounded-md overflow-hidden shrink-0 transition-all ${selectedIndex === idx
                                                     ? 'ring-2 ring-primary ring-offset-2 ring-offset-background'
                                                     : 'opacity-70 hover:opacity-100'
-                                            }`}
+                                                }`}
                                         >
                                             <img
                                                 src={attachment.url}
@@ -518,11 +479,7 @@ const arePropsEqual = (prev: MessageProps, next: MessageProps) => {
         if (isLastUserRow || isEditingRow || isLastAssistantRow) return false;
     }
 
-    // Suggested questions: only re-render the last assistant row when they change
-    if (prev.suggestedQuestions !== next.suggestedQuestions) {
-        const lastAssistantIndex = getLastAssistantIndex(next.messages);
-        if (next.message.role === 'assistant' && next.index === lastAssistantIndex) return false;
-    }
+
 
     // Ignore changes to functions and other props not directly used for rendering this row
     return true; // props considered equal -> skip re-render
