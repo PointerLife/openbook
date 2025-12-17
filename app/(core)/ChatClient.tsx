@@ -35,6 +35,7 @@ import { Input } from '@/components/ui/input';
 import Sidebar from '@/components/layout/sidebar';
 import { useSpaces, type ChatMessage } from '@/contexts/SpacesContext'; // Adjusted path, assuming ChatMessage is exported from index of SpacesContext
 import { ChatInput } from '@/components/features/spaces/input/input-content-box';
+import { useSettings } from '@/contexts/SettingsContext';
 import { useStudyMode } from '@/contexts/StudyModeContext';
 import { StudyModeBadge } from '@/components/features/study/study-mode-badge';
 import { StudyFramework } from '@/lib/types';
@@ -144,6 +145,7 @@ const HomeContent = () => {
     const { currentSpace, currentSpaceId, switchSpace, addMessage, createSpace, markSpaceContextReset } = useSpaces();
     // Study mode context
     const { getStudyModeForSpace, setStudyMode } = useStudyMode();
+    const { systemPrompt } = useSettings();
     // Set Google Gemini 2.5 Flash as the default model
     const [selectedModel, setSelectedModel] = useLocalStorage(SELECTED_MODEL_KEY, 'neuman-default');
 
@@ -348,6 +350,7 @@ const HomeContent = () => {
                 group: selectedGroup,
                 user_id: userId,
                 timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                systemPrompt, // Added custom system prompt
             },
             onFinish: async (aiMessageFromSDK: Message, { finishReason }: { finishReason: string }) => {
                 if (aiMessageFromSDK.content && (finishReason === 'stop' || finishReason === 'length')) {
@@ -369,7 +372,7 @@ const HomeContent = () => {
                 });
             },
         };
-    }, [selectedModel, selectedGroup, userId, currentStudyMode]);
+    }, [selectedModel, selectedGroup, userId, currentStudyMode, systemPrompt]);
 
     const { input, messages, setInput, append, handleSubmit, setMessages, reload, stop, status, error } =
         useChat(chatOptions);

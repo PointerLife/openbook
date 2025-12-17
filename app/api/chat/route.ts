@@ -29,7 +29,7 @@ const middleware = extractReasoningMiddleware({
 });
 
 export async function POST(req: Request) {
-    const { messages, model, group, user_id, timezone } = await req.json();
+    const { messages, model, group, user_id, timezone, systemPrompt } = await req.json();
 
     // Ensure activeTools is always an array to avoid spread operator errors later
     let activeTools: readonly any[] = [];
@@ -41,6 +41,12 @@ export async function POST(req: Request) {
         return new Response(JSON.stringify({ error: 'Failed to load group configuration' }), {
             status: 500,
         });
+    }
+
+    // Override instructions if systemPrompt is provided (User setting)
+    if (systemPrompt && systemPrompt.trim().length > 0) {
+        // debugLog('Using custom system prompt:', systemPrompt);
+        instructions = systemPrompt;
     }
 
     debugLog('--------------------------------');
@@ -101,7 +107,7 @@ export async function POST(req: Request) {
                         execute: async ({ timezone: tz, format }: { timezone?: string; format?: string }) => {
                             const now = new Date();
                             const userTimezone = tz || timezone || 'UTC';
-                            
+
                             try {
                                 const dateTimeFormat = new Intl.DateTimeFormat('en-US', {
                                     weekday: 'long',
@@ -114,9 +120,9 @@ export async function POST(req: Request) {
                                     timeZone: userTimezone,
                                     timeZoneName: 'short',
                                 });
-                                
+
                                 const formatted = dateTimeFormat.format(now);
-                                
+
                                 return {
                                     datetime: formatted,
                                     timezone: userTimezone,
@@ -136,7 +142,7 @@ export async function POST(req: Request) {
                                     timeZone: 'UTC',
                                     timeZoneName: 'short',
                                 });
-                                
+
                                 return {
                                     datetime: utcFormat.format(now),
                                     timezone: 'UTC',
@@ -181,7 +187,7 @@ export async function POST(req: Request) {
                         schema: toolDefinition.parameters,
                         prompt: [
                             `The model tried to call the tool "${toolCall.toolName}"` +
-                                ` with the following arguments:`,
+                            ` with the following arguments:`,
                             JSON.stringify(toolCall.args),
                             `The tool accepts the following schema:`,
                             JSON.stringify(parameterSchema(toolCall)),

@@ -6,6 +6,7 @@ import './globals.css';
 import { Providers } from '../(config)/providers';
 import { SpacesProvider } from '@/contexts/SpacesContext';
 import { NotebookProvider } from '@/contexts/NotebookContext';
+import { SettingsProvider } from '@/contexts/SettingsContext';
 
 export default function CoreLayout({
     children,
@@ -16,10 +17,12 @@ export default function CoreLayout({
         <NuqsAdapter>
             <Providers>
                 <NotebookProvider>
-                    <SpacesProvider>
-                        <Toaster position="top-center" />
-                        {children}
-                    </SpacesProvider>
+                    <SettingsProvider>
+                        <SpacesProvider>
+                            <Toaster position="top-center" />
+                            {children}
+                        </SpacesProvider>
+                    </SettingsProvider>
                 </NotebookProvider>
             </Providers>
             <Analytics />
