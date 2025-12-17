@@ -300,6 +300,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                                 onClick={clearLocalStorage}
                                 className="flex items-center gap-2 w-full text-left px-2 py-1.5 text-sm text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded"
                             >
+                                <Trash2 className="h-4 w-4 text-neutral-400" />
                                 <span>Clear Storage</span>
                             </button>
                             {/* Settings Button (Wraps the button with the SettingsPanel Trigger) */}
