@@ -22,6 +22,7 @@ import {
     AppWindowMac,
     Plus,
 } from 'lucide-react';
+import Image from 'next/image';
 import { useSpaces, Space as SpaceType } from '@/contexts/SpacesContext';
 import { useNotebooks } from '@/contexts/NotebookContext';
 import { useRouter } from 'next/navigation';
@@ -62,15 +63,15 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
     const currentPageType = pathname.startsWith('/journal/')
         ? 'journal'
         : pathname.startsWith('/space/')
-          ? 'space'
-          : '';
+            ? 'space'
+            : '';
 
     const currentPageId =
         currentPageType === 'journal'
             ? pathname.split('/journal/')[1]?.split(/[/?#]/)[0] || ''
             : currentPageType === 'space'
-              ? pathname.split('/space/')[1]?.split(/[/?#]/)[0] || ''
-              : '';
+                ? pathname.split('/space/')[1]?.split(/[/?#]/)[0] || ''
+                : '';
 
     // Only expand sections on initial page load, not when manually collapsed
     useEffect(() => {
@@ -155,7 +156,14 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                         {/* Brand row */}
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                                <BookOpen className="h-5 w-5 text-neutral-700 dark:text-neutral-300" />
+                                <div className="relative h-6 w-6">
+                                    <Image
+                                        src="/logo.svg"
+                                        alt="OpenBook Logo"
+                                        fill
+                                        className="object-contain dark:invert"
+                                    />
+                                </div>
                                 <span className="text-lg font-medium text-neutral-800 dark:text-neutral-200">
                                     OpenBook
                                 </span>
@@ -299,9 +307,9 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
             </aside>
 
             {/* Search Modal */}
-            <SearchModal 
-                isOpen={showSearchModal} 
-                onClose={() => setShowSearchModal(false)} 
+            <SearchModal
+                isOpen={showSearchModal}
+                onClose={() => setShowSearchModal(false)}
             />
 
             {/* Add the clear storage confirmation dialog */}
@@ -350,7 +358,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                                     onClick={() => {
                                         // Clear all application data using centralized function
                                         clearAllStorageData(true);
-                                        
+
                                         // Use router navigation instead of reload
                                         router.push('/');
                                         setShowClearStorageConfirm(false);

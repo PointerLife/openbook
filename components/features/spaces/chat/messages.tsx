@@ -276,9 +276,9 @@ const Messages: React.FC<MessagesProps> = ({
                         <div className="flex items-center justify-between mt-5 mb-2">
                             <div className="flex items-center gap-2">
                                 <Image
-                                    src="/m.png"
+                                    src="/logo.svg"
                                     alt="Neuman"
-                                    className="size-8"
+                                    className="size-6 dark:invert"
                                     width={100}
                                     height={100}
                                     unoptimized
@@ -532,9 +532,9 @@ const Messages: React.FC<MessagesProps> = ({
                 <div className="py-12">
                     <div className="flex flex-col items-center justify-center space-y-2">
                         <Image
-                            src="/openbook.png"
+                            src="/logo.svg"
                             alt="Openbook"
-                            className="size-24 mb-4 invert dark:invert-0"
+                            className="size-24 mb-4 dark:invert"
                             width={100}
                             height={100}
                             unoptimized

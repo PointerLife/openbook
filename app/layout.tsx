@@ -38,21 +38,14 @@ export const metadata: Metadata = {
     keywords: ['OpenBook', 'openbook', 'Open Book', 'AI Integrated Book'],
     icons: {
         icon: [
-            { url: '/images/favicon.ico' },
-            { url: '/images/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-            { url: '/images/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+            { url: '/logo.svg', type: 'image/svg+xml' },
         ],
-        apple: [{ url: '/images/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+        apple: [{ url: '/logo.svg', type: 'image/svg+xml' }],
         other: [
             {
                 rel: 'mask-icon',
-                url: '/safari-pinned-tab.svg',
+                url: '/logo.svg',
                 color: '#000000',
-            },
-            {
-                rel: 'apple-touch-startup-image',
-                url: '/screenshots/main-interface.png',
-                media: '(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)',
             },
         ],
     },

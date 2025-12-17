@@ -13,7 +13,7 @@ import { LoadingDots } from '@/components/ui/loading-dots';
 export const MessageLoading: React.FC<{ loadingText?: string }> = ({ loadingText = "Loading…" }) => {
     return (
         <div className="flex items-center gap-2 mt-5 mb-2" role="status" aria-live="polite">
-            <Image src="/m.png" alt="" role="presentation" className="size-8" width={100} height={100} unoptimized quality={100} />
+            <Image src="/logo.svg" alt="" role="presentation" className="size-8 dark:invert" width={100} height={100} unoptimized quality={100} />
             <h2 className="text-md font-medium text-neutral-800 dark:text-neutral-200 flex items-center gap-2">
                 Neuman
                 <LoadingDots />
