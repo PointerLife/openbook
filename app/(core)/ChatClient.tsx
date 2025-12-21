@@ -34,7 +34,8 @@ import { SIDEBAR_STATE_KEY, SELECTED_MODEL_KEY } from '@/lib/storageKeys';
 
 import Messages from '@/components/features/spaces/chat/messages';
 import { Input } from '@/components/ui/input';
-import Sidebar from '@/components/layout/sidebar';
+
+
 import { useSpaces, type ChatMessage } from '@/contexts/SpacesContext'; // Adjusted path, assuming ChatMessage is exported from index of SpacesContext
 import { ChatInput } from '@/components/features/spaces/input/input-content-box';
 import { useSettings } from '@/contexts/SettingsContext';
@@ -191,25 +192,7 @@ const HomeContent = () => {
     const [windowWidth, setWindowWidth] = useState<number>(() =>
         typeof window !== 'undefined' ? window.innerWidth : 1024,
     );
-    // Use cached localStorage for sidebar state to avoid synchronous reads on every render
-    const [sidebarOpen, setSidebarOpen] = useState(() => {
-        if (typeof window === 'undefined') return true;
-        try {
-            const savedState = localStorage.getItem(SIDEBAR_STATE_KEY);
-            return savedState !== null ? savedState === 'true' : true;
-        } catch {
-            return true;
-        }
-    });
 
-    // Sidebar state is now initialized directly from localStorage to avoid re-reads
-
-    // Update localStorage when sidebar state changes
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            localStorage.setItem(SIDEBAR_STATE_KEY, String(sidebarOpen));
-        }
-    }, [sidebarOpen]);
 
     // Get stored user ID
     const userId = useMemo(() => getUserId(), []);
@@ -594,23 +577,9 @@ const HomeContent = () => {
 
     return (
         <div className="flex flex-col !font-sans items-center min-h-screen bg-background text-foreground transition-all duration-500">
-            {/* Sidebar overlay for mobile */}
-            {sidebarOpen && windowWidth < 768 && (
-                <div
-                    className="fixed inset-0 bg-black/30 z-40 transition-opacity duration-300"
-                    onClick={() => setSidebarOpen(false)}
-                />
-            )}
-
-            <Sidebar isOpen={sidebarOpen} setIsOpen={setSidebarOpen} />
             <div
                 className={cn(
                     'w-full transition-all duration-300 flex flex-col items-center',
-                    sidebarOpen && windowWidth >= 768
-                        ? windowWidth >= 1024
-                            ? 'lg:ml-[256px] lg:w-[calc(100%-256px)]'
-                            : 'md:ml-[240px] md:w-[calc(100%-240px)]'
-                        : '',
                 )}
             >
                 <TopBar
@@ -717,12 +686,7 @@ const HomeContent = () => {
                         <div
                             className="fixed bottom-0 left-0 right-0 pb-3 sm:pb-4 z-40 pointer-events-none"
                             style={{
-                                paddingLeft:
-                                    sidebarOpen && windowWidth >= 768
-                                        ? windowWidth >= 1024
-                                            ? SIDEBAR_WIDTH
-                                            : SIDEBAR_WIDTH_SM
-                                        : 0,
+                                paddingLeft: 0,
                                 paddingRight: 0,
                                 transition: 'padding-left 0.3s ease',
                             }}

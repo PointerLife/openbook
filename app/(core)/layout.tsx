@@ -7,6 +7,7 @@ import { Providers } from '../(config)/providers';
 import { SpacesProvider } from '@/contexts/SpacesContext';
 import { NotebookProvider } from '@/contexts/NotebookContext';
 import { SettingsProvider } from '@/contexts/SettingsContext';
+import SidebarLayout from './SidebarLayout';
 
 export default function CoreLayout({
     children,
@@ -20,7 +21,9 @@ export default function CoreLayout({
                     <SettingsProvider>
                         <SpacesProvider>
                             <Toaster position="top-center" />
-                            {children}
+                            <SidebarLayout>
+                                {children}
+                            </SidebarLayout>
                         </SpacesProvider>
                     </SettingsProvider>
                 </NotebookProvider>
