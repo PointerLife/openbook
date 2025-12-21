@@ -1,6 +1,6 @@
 import { GeistSans } from 'geist/font/sans';
 import 'katex/dist/katex.min.css';
-import 'mapbox-gl/dist/mapbox-gl.css';
+
 import { Metadata, Viewport } from 'next';
 import { Syne } from 'next/font/google';
 import Script from 'next/script';

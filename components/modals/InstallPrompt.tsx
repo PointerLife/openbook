@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Share } from 'lucide-react';
 import { useLocalStorage } from '@/hooks/use-local-storage';
 import { INSTALL_PROMPT_DISMISSED_KEY } from '@/lib/storageKeys';
