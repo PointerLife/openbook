@@ -4,5 +4,7 @@
             "path": "/api/cron-handler",
             "schedule": "0 0 * * *"
         }
-    ]
+    ],
+    "installCommand": "bun install",
+    "buildCommand": "bun run build"
 }
