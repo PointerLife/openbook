@@ -29,19 +29,8 @@ export default function Editor({ initialBlocks, onBlocksChange, title, onTitleCh
     const [showSlashMenu, setShowSlashMenu] = useState(false);
     const [slashMenuPosition, setSlashMenuPosition] = useState({ top: 0, left: 0 });
     const [currentBlockId, setCurrentBlockId] = useState<string>(blocks[0]?.id || '');
-    const [isLoading, setIsLoading] = useState(true);
 
     const editorRef = useRef<HTMLDivElement>(null);
-
-
-
-    useEffect(() => {
-        // Initialize loading state
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 500);
-        return () => clearTimeout(timer);
-    }, []);
 
     // Sync initial blocks
     useEffect(() => {
@@ -270,17 +259,6 @@ export default function Editor({ initialBlocks, onBlocksChange, title, onTitleCh
         setShowSlashMenu(false);
         updateBlocks(blocks.map((blk) => (blk.id === currentBlockId ? { ...blk, type } : blk)));
     };
-
-    if (isLoading) {
-        return (
-            <div className="flex h-full items-center justify-center bg-background text-foreground">
-                <div className="flex flex-col items-center">
-                    <div className="h-8 w-8 animate-spin rounded-full border-t-2 border-b-2 border-primary"></div>
-                    <p className="mt-4 text-sm font-light">Loading...</p>
-                </div>
-            </div>
-        );
-    }
 
     return (
         <div className="flex flex-col h-full bg-background text-foreground">
