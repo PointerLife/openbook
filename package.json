@@ -11,7 +11,7 @@
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "knip:ci": "knip --fail",
-        "analyze": "ANALYZE=true npm run build",
+        "analyze": "ANALYZE=true bun run build",
         "knip": "knip"
     },
     "dependencies": {
