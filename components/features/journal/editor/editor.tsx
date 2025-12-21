@@ -273,9 +273,9 @@ export default function Editor({ initialBlocks, onBlocksChange, title, onTitleCh
 
     if (isLoading) {
         return (
-            <div className="flex h-full items-center justify-center bg-white text-black dark:bg-black dark:text-white">
+            <div className="flex h-full items-center justify-center bg-background text-foreground">
                 <div className="flex flex-col items-center">
-                    <div className="h-8 w-8 animate-spin rounded-full border-t-2 border-b-2 border-black dark:border-white"></div>
+                    <div className="h-8 w-8 animate-spin rounded-full border-t-2 border-b-2 border-primary"></div>
                     <p className="mt-4 text-sm font-light">Loading...</p>
                 </div>
             </div>
@@ -283,7 +283,7 @@ export default function Editor({ initialBlocks, onBlocksChange, title, onTitleCh
     }
 
     return (
-        <div className="flex flex-col h-full bg-white text-black dark:bg-neutral-900 dark:text-white">
+        <div className="flex flex-col h-full bg-background text-foreground">
             <TopBar className="bg-transparent pt-8">
                 <div className="flex items-center space-x-2 w-full max-w-2xl mx-auto px-4 sm:px-0">
                     <input
