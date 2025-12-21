@@ -110,6 +110,7 @@ export default function SidebarNotebook({ notebook, currentPageType, currentPage
         setEditingJournalId(newEntry.id);
         setEditingJournalTitle(defaultTitle);
         if (!journalsOpen) setJournalsOpen(true);
+        router.push(`/journal/${newEntry.id}`);
     };
 
     const handleCreateSpace = () => {
@@ -123,6 +124,7 @@ export default function SidebarNotebook({ notebook, currentPageType, currentPage
         setEditingSpaceId(newSpaceId);
         setEditingSpaceName(defaultTitle);
         if (!spacesOpen) setSpacesOpen(true);
+        router.push(`/space/${newSpaceId}`);
     };
 
     const handleJournalClick = (entryId: string) => {

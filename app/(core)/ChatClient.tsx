@@ -439,6 +439,12 @@ const HomeContent = () => {
         }
     }, [initialState.query, appendWithPersist, setInput, messages]);
 
+    // Reset UI state when switching spaces
+    useEffect(() => {
+        setHasSubmitted(false);
+        setHasManuallyScrolled(false);
+    }, [currentSpaceId]);
+
     // Wrap setMessages to satisfy MessagesProps (only array setter)
     const updateMessages = useCallback(
         (msgs: any[]) => {
