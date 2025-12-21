@@ -26,7 +26,8 @@ import {
 import Image from 'next/image';
 import { useSpaces, Space as SpaceType } from '@/contexts/SpacesContext';
 import { useNotebooks } from '@/contexts/NotebookContext';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
+
 import { useJournal } from '@/hooks/useJournal';
 import { cn } from '@/lib/utils';
 import { clearAllStorageData } from '@/lib/storageKeys';
@@ -57,9 +58,8 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
     const { entries, deleteEntry } = useJournal();
     const { spaces, switchSpace, deleteSpace, currentSpaceId } = useSpaces();
     const router = useRouter();
+    const pathname = usePathname();
 
-    // Get current path and parse current page type and ID
-    const pathname = typeof window !== 'undefined' ? window.location.pathname : '';
 
     // Extract IDs directly from pathname - more reliable than using context
     const currentPageType = pathname.startsWith('/journal/')
