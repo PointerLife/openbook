@@ -16,8 +16,8 @@ import {
     Quote,
     Minus,
     Code,
-    Image,
     Table,
+
     Link,
     CalendarDays,
     ExternalLink,
@@ -131,13 +131,7 @@ export default function SlashCommandMenu({ position, onSelect, onClose }: SlashC
             category: 'advanced',
             description: 'Capture a code snippet',
         },
-        {
-            type: BlockType.Image,
-            label: 'Image',
-            icon: <Image className="w-4 h-4" />,
-            category: 'media',
-            description: 'Upload or embed an image',
-        },
+
         {
             type: BlockType.Table,
             label: 'Table',

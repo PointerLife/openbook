@@ -10,7 +10,7 @@ export enum BlockType {
     Quote = 'quote',
     Divider = 'divider',
     Code = 'code',
-    Image = 'image',
+
     Table = 'table',
     Page = 'page',
     Link = 'link',
