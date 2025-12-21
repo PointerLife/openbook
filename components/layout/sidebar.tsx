@@ -142,7 +142,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
 
             <aside
                 className={cn(
-                    'fixed top-0 left-0 h-screen transition-[width] duration-200 ease-out flex flex-col',
+                    'fixed top-0 left-0 h-screen transition-[width] duration-200 ease-out flex flex-col z-50',
                     'bg-white dark:bg-neutral-900 border-r border-neutral-100 dark:border-neutral-800',
                     isOpen ? 'w-64 pointer-events-auto' : 'w-0 pointer-events-none',
                 )}

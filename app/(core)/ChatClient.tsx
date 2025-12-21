@@ -24,6 +24,8 @@ import {
 import Link from 'next/link';
 import React, { memo, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { TopBar } from '@/components/layout/top-bar';
+import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { InstallPrompt } from '@/components/modals/InstallPrompt';
 import { useLocalStorage } from '@/hooks/use-local-storage';
@@ -462,22 +464,7 @@ const HomeContent = () => {
         [setMessages],
     );
 
-    const ThemeToggle: React.FC = () => {
-        const { resolvedTheme, setTheme } = useTheme();
 
-        return (
-            <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-                className="bg-transparent hover:bg-neutral-100 dark:hover:bg-neutral-800"
-            >
-                <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                <span className="sr-only">Toggle theme</span>
-            </Button>
-        );
-    };
 
     // Determine which messages to display based on context reset flag
     const displayMessages = useMemo(() => {
@@ -588,30 +575,7 @@ const HomeContent = () => {
         );
     };
 
-    interface NavbarProps { }
 
-    const Navbar: React.FC<NavbarProps> = () => {
-        return (
-            <div
-                className={cn(
-                    'fixed top-0 left-0 right-0 z-40 flex justify-between items-center p-3 sm:p-4 pointer-events-none',
-                    // No background, no shadow
-                    'bg-transparent',
-                )}
-            >
-                <div className="flex items-center gap-2 sm:gap-4 pointer-events-auto">{/* Sidebar toggle button removed */}</div>
-                <div className="flex items-center space-x-2 sm:space-x-4 pointer-events-auto">
-                    {currentStudyMode?.framework && (
-                        <StudyModeBadge
-                            framework={currentStudyMode.framework as StudyFramework}
-                            onClick={handleStudyModeBadgeClick}
-                        />
-                    )}
-                    <ThemeToggle />
-                </div>
-            </div>
-        );
-    };
 
     // Define the model change handler
     const handleModelChange = useCallback(
@@ -649,7 +613,17 @@ const HomeContent = () => {
                         : '',
                 )}
             >
-                <Navbar />
+                <TopBar
+                    className="p-3 sm:p-4 bg-transparent"
+                    actions={
+                        currentStudyMode?.framework ? (
+                            <StudyModeBadge
+                                framework={currentStudyMode.framework as StudyFramework}
+                                onClick={handleStudyModeBadgeClick}
+                            />
+                        ) : null
+                    }
+                />
                 <div className="w-full p-2 sm:p-4 md:p-10 !mt-32 sm:!mt-40 flex !flex-col border-b border-neutral-100 dark:border-neutral-800 md:border-0">
                     <div
                         className={`w-full max-w-[95%] xs:max-w-[90%] sm:max-w-2xl md:max-w-3xl lg:max-w-4xl space-y-2 sm:space-y-3 mx-auto transition-all duration-300 overflow-visible`}

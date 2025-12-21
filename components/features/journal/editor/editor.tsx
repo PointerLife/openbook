@@ -1,13 +1,12 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Moon, Sun } from 'lucide-react';
-import { useTheme } from 'next-themes';
+import { AnimatePresence, motion } from 'framer-motion';
 import SlashCommandMenu from './slash-command-menu';
 import EditorContent from './editor-content';
 import EmptyState from './empty-state';
-import { type Block, BlockType } from '@/lib/types';
+import { BlockType, type Block } from '@/lib/types';
+import { TopBar } from '@/components/layout/top-bar';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 
@@ -34,22 +33,7 @@ export default function Editor({ initialBlocks, onBlocksChange, title, onTitleCh
 
     const editorRef = useRef<HTMLDivElement>(null);
 
-    // Theme toggle component
-    const ThemeToggle: React.FC = () => {
-        const { resolvedTheme, setTheme } = useTheme();
 
-        return (
-            <button
-                onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-                className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-                title="Toggle theme"
-            >
-                <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                <span className="sr-only">Toggle theme</span>
-            </button>
-        );
-    };
 
     useEffect(() => {
         // Initialize loading state
@@ -300,20 +284,19 @@ export default function Editor({ initialBlocks, onBlocksChange, title, onTitleCh
 
     return (
         <div className="flex flex-col h-full bg-white text-black dark:bg-neutral-900 dark:text-white">
-            <header className="flex h-20 items-center px-8" style={{ borderBottom: 'none' }}>
+            <TopBar className="bg-transparent">
                 <div className="flex items-center space-x-2 w-full max-w-2xl mx-auto">
                     <input
                         type="text"
-                        className="text-3xl font-bold bg-transparent border-none outline-none focus:ring-0 w-full opacity-90 focus:opacity-100"
+                        className="text-xl sm:text-3xl font-bold bg-transparent border-none outline-none focus:ring-0 w-full opacity-90 focus:opacity-100"
                         value={currentTitle}
                         onChange={(e) => handleTitleChange(e.target.value)}
                         placeholder={defaultTitle}
                     />
-                    <ThemeToggle />
                 </div>
-            </header>
+            </TopBar>
 
-            <div ref={editorRef} className="flex-1 overflow-y-auto py-8 px-8" onPaste={handlePaste}>
+            <div ref={editorRef} className="flex-1 overflow-y-auto py-8 px-8 pt-24" onPaste={handlePaste}>
                 <div className="max-w-2xl mx-auto">
                     {blocks.length === 0 ? (
                         <EmptyState
