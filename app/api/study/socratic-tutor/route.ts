@@ -7,8 +7,8 @@ export async function POST(request: NextRequest) {
         const body = await request.json();
         const { messages, model = 'neuman-google' } = body;
 
-        // Get the Spaced Repetition system prompt
-        const systemPrompt = getStudyFrameworkPrompt(StudyFramework.SpacedRepetition);
+        // Get the Socratic Tutor system prompt
+        const systemPrompt = getStudyFrameworkPrompt(StudyFramework.SocraticTutor);
 
         // Modify the messages to include the study framework system prompt
         const modifiedMessages = [{ role: 'system', content: systemPrompt }, ...messages];
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
             },
         });
     } catch (error) {
-        console.error('Spaced Repetition API error:', error);
-        return NextResponse.json({ error: 'Failed to process Spaced Repetition request' }, { status: 500 });
+        console.error('Socratic Tutor API error:', error);
+        return NextResponse.json({ error: 'Failed to process Socratic Tutor request' }, { status: 500 });
     }
 }

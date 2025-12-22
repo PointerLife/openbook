@@ -41,14 +41,14 @@ interface ChatInputProps {
     onCompactSpace?: (spaceId: string) => Promise<void>;
 }
 
-// Derive the Extreme command from the StudyFramework enum to avoid string drift
-// Ensure the command is always lowercase to match user input normalization
-const EXTREME_COMMAND = `/${StudyFramework.ExtremeMode.split('-')[0].toLowerCase()}` as const; // "/extreme"
+// Derive the Active Recall command from the StudyFramework enum
+// Ensure the command is always lowercase
+const ACTIVE_RECALL_COMMAND = `/${StudyFramework.ActiveRecall.split('-')[0].toLowerCase()}` as const; // "/active"
 
 const BASE_COMMANDS: ChatCommand[] = [
     { id: '/model', label: 'AI model' },
     { id: '/frameworks', label: 'Study frameworks' },
-    { id: EXTREME_COMMAND, label: 'Extreme mode' },
+    { id: ACTIVE_RECALL_COMMAND, label: 'Active Recall' },
 ];
 
 // ---------------------------------------------------------------------------
@@ -143,10 +143,10 @@ export function ChatInput({
 
     const handleCommand = (cmd: string) => {
         switch (cmd) {
-            case EXTREME_COMMAND:
-                onGroupChange('extreme');
-                onFrameworkSelect?.(StudyFramework.ExtremeMode);
-                toast.success('Extreme mode activated');
+            case ACTIVE_RECALL_COMMAND:
+                onGroupChange('active-recall');
+                onFrameworkSelect?.(StudyFramework.ActiveRecall);
+                toast.success('Active Recall activated');
                 onChange('');
                 break;
             case '/model':
@@ -187,9 +187,9 @@ export function ChatInput({
     };
 
     const handleFrameworkSelect = (framework: StudyFramework) => {
-        if (framework === StudyFramework.ExtremeMode) {
-            onGroupChange('extreme');
-            toast.success('Extreme mode activated');
+        if (framework === StudyFramework.ActiveRecall) {
+            onGroupChange('active-recall');
+            toast.success('Active Recall activated');
         } else {
             // For all other frameworks, ensure we revert to the default chat group
             onGroupChange('chat');

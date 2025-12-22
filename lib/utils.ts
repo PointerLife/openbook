@@ -40,7 +40,7 @@ export function getUserId(): string {
     return userId;
 }
 
-export type SearchGroupId = 'chat' | 'extreme';
+export type SearchGroupId = 'chat' | 'active-recall';
 
 const searchGroups = [
     {
@@ -51,10 +51,10 @@ const searchGroups = [
         show: true,
     },
     {
-        id: 'extreme' as const,
-        name: 'Extreme',
-        description: 'Deep research with multiple sources and analysis',
-        icon: TelescopeIcon, // <--- Icon from lucide-react used directly
+        id: 'active-recall' as const,
+        name: 'Active Recall',
+        description: 'Test your knowledge with adaptive quizzes',
+        icon: Memory, // <--- Icon from @phosphor-icons/react used directly
         show: false,
     },
 ] as const;

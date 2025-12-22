@@ -32,10 +32,9 @@ export function StudyModeBadge({ framework, onClick, className = '' }: StudyMode
 
 // Centralized color mapping to avoid duplication between background and text colors
 const frameworkColors: Record<StudyFramework | 'default', { bg: string; text: string }> = {
-    [StudyFramework.MemoryPalace]: { bg: 'rgba(59, 130, 246, 0.1)', text: 'rgb(59, 130, 246)' }, // blue
     [StudyFramework.FeynmanTechnique]: { bg: 'rgba(16, 185, 129, 0.1)', text: 'rgb(16, 185, 129)' }, // green
-    [StudyFramework.SpacedRepetition]: { bg: 'rgba(245, 158, 11, 0.1)', text: 'rgb(245, 158, 11)' }, // amber
-    [StudyFramework.ExtremeMode]: { bg: 'rgba(239, 68, 68, 0.1)', text: 'rgb(239, 68, 68)' }, // red
+    [StudyFramework.SocraticTutor]: { bg: 'rgba(59, 130, 246, 0.1)', text: 'rgb(59, 130, 246)' }, // blue
+    [StudyFramework.ActiveRecall]: { bg: 'rgba(239, 68, 68, 0.1)', text: 'rgb(239, 68, 68)' }, // red
     default: { bg: 'rgba(107, 114, 128, 0.1)', text: 'rgb(107, 114, 128)' }, // gray
 };
 
@@ -49,14 +48,12 @@ function getFrameworkTextColor(framework: StudyFramework): string {
 
 function getFrameworkAbbreviation(framework: StudyFramework): string {
     switch (framework) {
-        case StudyFramework.MemoryPalace:
-            return 'MP';
         case StudyFramework.FeynmanTechnique:
             return 'FT';
-        case StudyFramework.SpacedRepetition:
-            return 'SR';
-        case StudyFramework.ExtremeMode:
-            return 'EX';
+        case StudyFramework.SocraticTutor:
+            return 'ST';
+        case StudyFramework.ActiveRecall:
+            return 'AR';
         default:
             return 'ST';
     }

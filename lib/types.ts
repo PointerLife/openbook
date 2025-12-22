@@ -50,31 +50,26 @@ export interface JournalEntry {
 }
 
 export enum StudyFramework {
-    MemoryPalace = 'memory-palace',
     FeynmanTechnique = 'feynman-technique',
-    SpacedRepetition = 'spaced-repetition',
-    ExtremeMode = 'extreme-mode',
+    SocraticTutor = 'socratic-tutor',
+    ActiveRecall = 'active-recall',
 }
 
 export interface StudyModeSettings {
     framework: StudyFramework | null;
     activatedAt: number;
     settings: {
-        memoryPalace?: {
-            currentLocation?: string;
-            stations?: Array<{ id: string; name: string; concept: string }>;
-        };
         feynman?: {
             currentConcept?: string;
             simplificationLevel?: number;
         };
-        spacedRepetition?: {
-            reviewSchedule?: Array<{ concept: string; nextReview: number; interval: number }>;
+        socratic?: {
+            currentTopic?: string;
+            depthLevel?: number;
         };
-        extremeMode?: {
-            sessionStartTime?: number;
-            targetDuration?: number;
-            combinedTechniques?: StudyFramework[];
+        activeRecall?: {
+            difficulty?: 'easy' | 'medium' | 'hard';
+            reviewFocus?: string;
         };
     };
 }

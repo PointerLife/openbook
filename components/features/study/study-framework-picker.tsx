@@ -18,10 +18,9 @@ export function StudyFrameworkPicker({ onSelect, onClose, className = '' }: Stud
 
     const frameworks = React.useMemo(
         () => [
-            StudyFramework.MemoryPalace,
             StudyFramework.FeynmanTechnique,
-            StudyFramework.SpacedRepetition,
-            StudyFramework.ExtremeMode,
+            StudyFramework.SocraticTutor,
+            StudyFramework.ActiveRecall,
         ],
         [],
     );
@@ -47,8 +46,7 @@ export function StudyFrameworkPicker({ onSelect, onClose, className = '' }: Stud
             switch (e.key) {
                 case '1':
                 case '2':
-                case '3':
-                case '4': {
+                case '3': {
                     e.preventDefault();
                     const index = parseInt(e.key, 10) - 1;
                     if (index >= 0 && index < frameworks.length) {
@@ -91,7 +89,7 @@ export function StudyFrameworkPicker({ onSelect, onClose, className = '' }: Stud
     }, []);
 
     return (
-        <motion.div 
+        <motion.div
             ref={containerRef}
             tabIndex={-1}
             onKeyDown={handleKeyDown}
@@ -110,9 +108,9 @@ export function StudyFrameworkPicker({ onSelect, onClose, className = '' }: Stud
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            transition={{ 
-                duration: 0.2, 
-                ease: [0.4, 0.0, 0.2, 1] 
+            transition={{
+                duration: 0.2,
+                ease: [0.4, 0.0, 0.2, 1]
             }}
         >
             <div className="p-2">
@@ -135,10 +133,9 @@ export function StudyFrameworkPicker({ onSelect, onClose, className = '' }: Stud
                                 className={`
                                     p-2 rounded cursor-pointer transition-all duration-150 
                                     border backdrop-blur-sm
-                                    ${
-                                        isSelected || isHovered
-                                            ? 'bg-white/50 dark:bg-neutral-800/50 border-neutral-300/40 dark:border-neutral-600/40 shadow-md'
-                                            : 'bg-white/20 dark:bg-neutral-800/20 border-neutral-200/20 dark:border-neutral-700/20 hover:bg-white/40 dark:hover:bg-neutral-800/40'
+                                    ${isSelected || isHovered
+                                        ? 'bg-white/50 dark:bg-neutral-800/50 border-neutral-300/40 dark:border-neutral-600/40 shadow-md'
+                                        : 'bg-white/20 dark:bg-neutral-800/20 border-neutral-200/20 dark:border-neutral-700/20 hover:bg-white/40 dark:hover:bg-neutral-800/40'
                                     }
                                 `}
                                 onClick={() => onSelect(framework)}
@@ -168,7 +165,7 @@ export function StudyFrameworkPicker({ onSelect, onClose, className = '' }: Stud
                     <div className="text-[9px] text-neutral-500 dark:text-neutral-400">
                         <div className="flex justify-between items-center">
                             <span className="flex items-center gap-1">
-                                <span className="bg-neutral-100/40 dark:bg-neutral-700/40 px-0.5 py-0.5 rounded font-mono text-[8px]">1-4</span>
+                                <span className="bg-neutral-100/40 dark:bg-neutral-700/40 px-0.5 py-0.5 rounded font-mono text-[8px]">1-3</span>
                                 <span>select</span>
                             </span>
                             <span className="flex items-center gap-1">

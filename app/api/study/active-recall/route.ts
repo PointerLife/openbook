@@ -7,8 +7,8 @@ export async function POST(request: NextRequest) {
         const body = await request.json();
         const { messages, model = 'neuman-google' } = body;
 
-        // Get the Memory Palace system prompt
-        const systemPrompt = getStudyFrameworkPrompt(StudyFramework.MemoryPalace);
+        // Get the Active Recall system prompt
+        const systemPrompt = getStudyFrameworkPrompt(StudyFramework.ActiveRecall);
 
         // Modify the messages to include the study framework system prompt
         const modifiedMessages = [{ role: 'system', content: systemPrompt }, ...messages];
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
             },
         });
     } catch (error) {
-        console.error('Memory Palace API error:', error);
-        return NextResponse.json({ error: 'Failed to process Memory Palace request' }, { status: 500 });
+        console.error('Active Recall API error:', error);
+        return NextResponse.json({ error: 'Failed to process Active Recall request' }, { status: 500 });
     }
 }
