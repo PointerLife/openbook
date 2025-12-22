@@ -16,6 +16,7 @@ export type ChatMessage = {
     role: 'user' | 'assistant';
     content: string;
     timestamp: number;
+    hidden?: boolean;
 };
 
 export type Space = {

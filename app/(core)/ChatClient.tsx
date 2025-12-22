@@ -382,13 +382,14 @@ const HomeContent = () => {
             // 1. Set flag to indicate we are switching frameworks
             isFrameworkSwitchingRef.current = true;
 
-            // 2. Create the activation message manually
+            // 2. Create the activation message manually (hidden from UI)
             const name = getFrameworkDisplayName(framework);
             const userChatMessage: ChatMessage = {
                 id: crypto.randomUUID(),
                 role: 'user',
                 content: `Activate ${name}`,
                 timestamp: Date.now(),
+                hidden: true,
             };
 
             // 3. Persist to storage immediately
@@ -495,11 +496,31 @@ const HomeContent = () => {
             console.log(
                 `[DISPLAY] Using space messages for context-reset space: ${currentSpace.messages.length} messages`,
             );
-            return [...currentSpace.messages].sort((a, b) => a.timestamp - b.timestamp);
+            return [...currentSpace.messages]
+                .filter(m => !m.hidden)
+                .sort((a, b) => a.timestamp - b.timestamp);
         } else {
             // For normal spaces, use useChat messages
+            // We also need to filter useChat messages that correspond to hidden messages
+            // However, useChat messages don't have the 'hidden' property directly on them usually
+            // but we can filter by content or check against currentSpace.messages
+
+            // Simpler approach: Filter messages from useChat state by checking if they are hidden in currentSpace messages
+            // But useChat messages (from Vercel SDK) might not map 1:1 with IDs if we didn't set them carefully.
+            // We set IDs carefully in appendWithPersist, but here we are using 'messages' from useChat.
+
+            // Actually, we sync 'messages' from 'currentSpace.messages' in the useEffect above:
+            // setMessages(sortedMessages);
+            // So 'messages' state IS 'currentSpace.messages' (for the most part).
+
             console.log(`[DISPLAY] Using useChat messages for normal space: ${messages.length} messages`);
-            return messages;
+
+            // We need to cast 'messages' or check generic properties.
+            // Since we sync from currentSpace, let's treat them as potentially containing 'hidden' if we passed it through.
+            // But 'messages' from useChat is typed as 'Message[]' from AI SDK.
+            // Our effect `setMessages(sortedMessages)` passes our ChatMessage[] (which has hidden) to useChat.
+            // So we can cast or check property presence.
+            return messages.filter((m: any) => !m.hidden);
         }
     }, [currentSpace?.metadata?.contextReset, currentSpace?.messages, messages]);
 
