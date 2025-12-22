@@ -9,9 +9,10 @@ interface StudyFrameworkPickerProps {
     onSelect: (framework: StudyFramework) => void;
     onClose: () => void;
     className?: string;
+    placement?: 'top' | 'bottom';
 }
 
-export function StudyFrameworkPicker({ onSelect, onClose, className = '' }: StudyFrameworkPickerProps) {
+export function StudyFrameworkPicker({ onSelect, onClose, className = '', placement = 'top' }: StudyFrameworkPickerProps) {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -88,6 +89,11 @@ export function StudyFrameworkPicker({ onSelect, onClose, className = '' }: Stud
         containerRef.current?.focus();
     }, []);
 
+    // Determine position based on placement prop
+    const positionClasses = placement === 'top'
+        ? 'bottom-full mb-2 origin-bottom'
+        : 'top-full mt-2 origin-top';
+
     return (
         <motion.div
             ref={containerRef}
@@ -96,13 +102,14 @@ export function StudyFrameworkPicker({ onSelect, onClose, className = '' }: Stud
             role="dialog"
             aria-modal="true"
             className={`
-                absolute bottom-full left-0 w-80 mb-2 z-[1000]
+                absolute left-0 w-80 z-[1000]
                 bg-white/60 dark:bg-neutral-900/60 
                 backdrop-blur-xl backdrop-saturate-150
                 border border-white/30 dark:border-neutral-700/40
                 shadow-xl shadow-black/5 dark:shadow-black/20
                 rounded-lg overflow-hidden 
                 text-neutral-900 dark:text-white
+                ${positionClasses}
                 ${className}
             `}
             initial={{ opacity: 0, y: 10, scale: 0.95 }}

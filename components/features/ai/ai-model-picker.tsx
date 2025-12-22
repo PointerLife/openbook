@@ -280,9 +280,10 @@ interface AiModelPickerProps {
     loadingModelId?: string | null;
     loadingProgress?: number;
     loadingText?: string;
+    placement?: 'top' | 'bottom';
 }
 
-export function AiModelPicker({ selectedModel, onSelect, onClose, className = '', loadingModelId, loadingProgress, loadingText }: AiModelPickerProps) {
+export function AiModelPicker({ selectedModel, onSelect, onClose, className = '', loadingModelId, loadingProgress, loadingText, placement = 'top' }: AiModelPickerProps) {
     const [searchQuery, setSearchQuery] = useState('');
 
     // Filter models based on search
@@ -329,16 +330,22 @@ export function AiModelPicker({ selectedModel, onSelect, onClose, className = ''
         }
     }, []);
 
+    // Determine position based on placement prop
+    const positionClasses = placement === 'top'
+        ? 'bottom-12 origin-bottom'
+        : 'top-full mt-2 origin-top';
+
     return (
         <motion.div
             className={`
-                absolute bottom-12 left-0 w-[480px] z-[1000]
+                absolute left-0 w-[480px] z-[1000]
                 bg-white/90 dark:bg-[#0A0A0A]/90
                 backdrop-blur-2xl backdrop-saturate-150
                 border border-black/5 dark:border-white/10
                 shadow-2xl shadow-black/20 dark:shadow-black/40
                 rounded-2xl overflow-hidden flex flex-col
                 max-h-[600px]
+                ${positionClasses}
                 ${className}
             `}
             initial={{ opacity: 0, y: 10, scale: 0.98 }}

@@ -264,12 +264,14 @@ export function ChatInput({
                     loadingModelId={loadingModelId}
                     loadingProgress={loadingProgress}
                     loadingText={loadingText}
+                    placement="bottom"
                 />
             )}
             {activeMenu === 'frameworks' && (
                 <StudyFrameworkPicker
                     onSelect={handleFrameworkSelect}
                     onClose={closeMenu}
+                    placement="bottom"
                 />
             )}
             {activeMenu === 'compact' && (
