@@ -95,26 +95,6 @@ const ALL_MODELS: ModelDef[] = [
 
     // --- Free / Community ---
     {
-        value: 'deepseek-free',
-        label: 'DeepSeek v3.1',
-        description: 'Powerful open model with strong reasoning capabilities.',
-        provider: 'DeepSeek',
-        capabilities: ['Coding', 'Reasoning', 'Free'],
-        contextWindow: '32k',
-        tier: 'free',
-        tags: ['deepseek', 'open', 'free']
-    },
-    {
-        value: 'deepseek-r1',
-        label: 'DeepSeek R1',
-        description: 'Optimized for retrieval and factual queries.',
-        provider: 'DeepSeek',
-        capabilities: ['RAG', 'Free'],
-        contextWindow: '32k',
-        tier: 'free',
-        tags: ['deepseek', 'rag', 'free']
-    },
-    {
         value: 'neuman-gpt-oss-free', // Keeping this one as it wasn't in providers.ts mapping explicitly shown, or I missed it. Wait, I didn't see it in providers.ts earlier. Let me check the grep result or providers.ts again. Ah, I might have missed it. Let me double check providers.ts content from step 4.
         // Step 4 providers.ts: No 'neuman-gpt-oss-free'. It was NOT in providers.ts.
         // Ah, looking at Step 4 output, lines 43-66 do NOT contain 'neuman-gpt-oss-free'.
@@ -139,26 +119,6 @@ const ALL_MODELS: ModelDef[] = [
         contextWindow: '8k',
         tier: 'free',
         tags: ['groq', 'oss', 'free']
-    },
-    {
-        value: 'z-ai-glm-4',
-        label: 'GLM 4.5 Air',
-        description: 'Balanced open model from Z-AI.',
-        provider: 'Z-AI',
-        capabilities: ['Balanced', 'Free'],
-        contextWindow: '32k',
-        tier: 'free',
-        tags: ['glm', 'free']
-    },
-    {
-        value: 'alibaba-qwen-coder',
-        label: 'Qwen 3 Coder',
-        description: 'Specialized model for code generation.',
-        provider: 'Alibaba',
-        capabilities: ['Coding', 'Free'],
-        contextWindow: '32k',
-        tier: 'free',
-        tags: ['qwen', 'coding', 'free']
     },
     {
         value: 'google-gemma-3n',

@@ -50,12 +50,8 @@ export const neuman = customProvider({
   languageModels: {
     'google-default': google('models/gemini-3-flash-preview'),
     'openai-gpt-5-1': openai('gpt-5.1'),
-    'deepseek-free': openrouter('nex-agi/deepseek-v3.1-nex-n1:free'),
-    'z-ai-glm-4': openrouter('z-ai/glm-4.5-air:free'),
-    'alibaba-qwen-coder': openrouter('qwen/qwen3-coder:free'),
     'google-gemma-3n': openrouter('google/gemma-3n-e2b-it:free'),
     'google-gemma-3-27b': openrouter('google/gemma-3-27b-it:free'),
-    'deepseek-r1': openrouter('deepseek/deepseek-r1-0528:free'),
     'google-gemini-3-flash': google('models/gemini-3-flash-preview'),
     'google-gemini-2-5-pro': google('models/gemini-2.5-pro'),
     'google-gemini-2-5-flash': google('models/gemini-2.5-flash'),
