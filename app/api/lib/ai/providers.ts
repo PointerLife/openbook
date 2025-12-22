@@ -43,6 +43,7 @@ const google = createGoogleGenerativeAI({
 export const neuman = customProvider({
   languageModels: {
     'neuman-default': google('models/gemini-3-flash-preview'),
+    'neuman-gpt-5-1': openai('gpt-5.1'),
     'neuman-deepseek-free': openrouter('nex-agi/deepseek-v3.1-nex-n1:free'),
     'neuman-glm-4': openrouter('z-ai/glm-4.5-air:free'),
     'neuman-qwen-coder': openrouter('qwen/qwen3-coder:free'),
@@ -51,6 +52,7 @@ export const neuman = customProvider({
     'neuman-deepseek-r1': openrouter('deepseek/deepseek-r1-0528:free'),
     'neuman-gemini-3-flash': google('models/gemini-3-flash-preview'),
     'neuman-gemini-2-5-pro': google('models/gemini-2.5-pro'),
+    'neuman-gemini-2-5-flash': google('models/gemini-2.5-flash'),
     'neuman-gpt-5-mini': openai('gpt-5-mini-2025-08-07'),
     'neuman-gpt-5-nano': openai('gpt-5-nano-2025-08-07'),
     'neuman-apriel-15b': huggingface('ServiceNow-AI/Apriel-1.6-15b-Thinker:together'),
