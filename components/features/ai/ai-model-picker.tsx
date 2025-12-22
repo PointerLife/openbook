@@ -93,6 +93,48 @@ const ALL_MODELS: ModelDef[] = [
         tags: ['google', 'gemini', 'new']
     },
 
+    // --- Cerebras ---
+    {
+        value: 'cerebras-llama-3-3-70b',
+        label: 'Llama 3.3 70B (Cerebras)',
+        description: 'Super fast inference on Wafer-Scale Engine.',
+        provider: 'Cerebras',
+        capabilities: ['Fast', 'Reasoning'],
+        contextWindow: '128k',
+        tier: 'premium',
+        tags: ['cerebras', 'llama', 'fast']
+    },
+    {
+        value: 'cerebras-gpt-oss-120b',
+        label: 'GPT-OSS 120B',
+        description: 'Large scale open model.',
+        provider: 'Cerebras',
+        capabilities: ['Large', 'Fast'],
+        contextWindow: '8k',
+        tier: 'premium',
+        tags: ['cerebras', 'gpt', 'oss']
+    },
+    {
+        value: 'cerebras-qwen-3-32b',
+        label: 'Qwen 3 32B',
+        description: 'Efficient Qwen model on Cerebras.',
+        provider: 'Cerebras',
+        capabilities: ['Efficient', 'Fast'],
+        contextWindow: '32k',
+        tier: 'premium',
+        tags: ['cerebras', 'qwen', 'fast']
+    },
+    {
+        value: 'cerebras-qwen-3-235b',
+        label: 'Qwen 3 235B',
+        description: 'Massive Qwen model for complex tasks.',
+        provider: 'Cerebras',
+        capabilities: ['Massive', 'Reasoning'],
+        contextWindow: '32k',
+        tier: 'premium',
+        tags: ['cerebras', 'qwen', 'massive']
+    },
+
     // --- Free / Community ---
     {
         value: 'neuman-gpt-oss-free', // Keeping this one as it wasn't in providers.ts mapping explicitly shown, or I missed it. Wait, I didn't see it in providers.ts earlier. Let me check the grep result or providers.ts again. Ah, I might have missed it. Let me double check providers.ts content from step 4.

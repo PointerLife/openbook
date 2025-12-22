@@ -37,8 +37,12 @@ const openai = createOpenAI({
 const google = createGoogleGenerativeAI({
   apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
 });
+// Cerebras Configuration
+const cerebras = createOpenAI({
+  baseURL: 'https://api.cerebras.ai/v1',
+  apiKey: process.env.CEREBRAS_API_KEY,
+});
 
-// Custom provider with multiple AI models
 // Ollama Configuration (via OpenAI compatible endpoint)
 const ollama = createOpenAI({
   baseURL: 'http://localhost:11434/v1',
@@ -65,6 +69,12 @@ export const neuman = customProvider({
     'groq-qwen-3': groq('qwen/qwen3-32b'),
     'groq-llama-4-maverick-17b-128e-instruct': groq('meta-llama/llama-4-maverick-17b-128e-instruct'),
 
+    // Cerebras Models
+    'cerebras-llama-3-3-70b': cerebras('llama-3.3-70b'),
+    'cerebras-gpt-oss-120b': cerebras('gpt-oss-120b'),
+    'cerebras-qwen-3-32b': cerebras('qwen-3-32b'),
+    'cerebras-qwen-3-235b': cerebras('qwen-3-235b-a22b-instruct-2507'),
+
     // WebLLM (Browser)
     'local-phi-2': openai('local-phi-2'), // Placeholder for local model
     'local-phi-3-mini': openai('local-phi-3-mini'), // Placeholder for local model
@@ -89,6 +99,7 @@ export function getProviderOptions(model: string) {
     openai: {},
     xai: {},
     anthropic: {},
+    cerebras: {},
   } as Record<string, Record<string, unknown>>;
 
   return baseOptions;
