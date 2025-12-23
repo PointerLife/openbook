@@ -12,15 +12,15 @@ Prepare the UI components by adding necessary DOM IDs for targeting by the onboa
     - [x] Add `id="sidebar-clear-storage-trigger"` to the Clear Storage button in `components/layout/sidebar.tsx`.
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Infrastructure & ID Preparation' (Protocol in workflow.md) [checkpoint: be5cdfc]
 
-## Phase 2: Expanded Registration Logic
+## Phase 2: Expanded Registration Logic [checkpoint: 03fb565]
 Update the onboarding step registration to split slash commands and add the new widget step.
 
-- [ ] Task: Update ChatClient Registration
-    - [ ] Write failing test to verify new steps are registered in `ChatClient`.
-    - [ ] Replace single 'command-menu' step with 'model-switching', 'study-frameworks', and 'compacting' steps.
-    - [ ] Add 'daily-tools' step targeting `onboarding-widgets-container`.
-    - [ ] Ensure tests pass.
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Expanded Registration Logic' (Protocol in workflow.md)
+- [x] Task: Update ChatClient Registration
+    - [x] Write failing test to verify new steps are registered in `ChatClient`.
+    - [x] Replace single 'command-menu' step with 'model-switching', 'study-frameworks', and 'compacting' steps.
+    - [x] Add 'daily-tools' step targeting `onboarding-widgets-container`.
+    - [x] Ensure tests pass.
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Expanded Registration Logic' (Protocol in workflow.md)
 
 ## Phase 3: Sidebar Utility Steps
 Add the remaining onboarding steps for Settings and Clear Storage within the Sidebar component.
