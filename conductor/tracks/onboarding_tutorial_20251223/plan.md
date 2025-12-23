@@ -8,8 +8,8 @@
 
 ## Phase 2: UI Components
 - [x] Task: Design and build the `OnboardingOverlay` component (backdrop and spotlight effect). [f14e269]
-- [~] Task: Create the `TooltipCard` component for displaying the explanation text and navigation buttons ("Next", "Skip").
-- [ ] Task: Implement smooth Framer Motion animations for the overlay and tooltip transitions.
+- [x] Task: Create the `TooltipCard` component for displaying the explanation text and navigation buttons ("Next", "Skip"). [3fa79e7]
+- [x] Task: Implement smooth Framer Motion animations for the overlay and tooltip transitions. [3fa79e7]
 - [ ] Task: Conductor - User Manual Verification 'UI Components' (Protocol in workflow.md)
 
 ## Phase 3: Integration & Content
