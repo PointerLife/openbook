@@ -127,10 +127,28 @@ const HomeContent = () => {
             targetId: 'chat-input-container'
         });
         registerStep({
-            id: 'command-menu',
-            title: 'Slash Commands',
-            description: 'Type / to switch AI models, activate study frameworks, or compact long conversations into concise summaries.',
+            id: 'model-switching',
+            title: 'Model Switching',
+            description: 'Type /model or use the dropdown to switch between different AI models like GPT-4, Claude, or local LLMs.',
             targetId: 'chat-input-container'
+        });
+        registerStep({
+            id: 'study-frameworks',
+            title: 'Study Frameworks',
+            description: 'Type / to access study modes like Socratic Tutor, Feynman Technique, or Active Recall to enhance your learning.',
+            targetId: 'chat-input-container'
+        });
+        registerStep({
+            id: 'compacting',
+            title: 'Compacting',
+            description: 'Long conversation? Type /compact to summarize the chat and start a fresh context while keeping the history.',
+            targetId: 'chat-input-container'
+        });
+        registerStep({
+            id: 'daily-tools',
+            title: 'Daily Learning Tools',
+            description: 'Track your learning streak and get daily surprise prompts to keep your curiosity alive.',
+            targetId: 'onboarding-widgets-container'
         });
         registerStep({
             id: 'sidebar-search',
