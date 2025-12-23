@@ -1,6 +1,8 @@
 // @bun-test-dom happy-dom
 import { GlobalRegistrator } from "@happy-dom/global-registrator";
-GlobalRegistrator.register();
+try {
+  GlobalRegistrator.register();
+} catch {}
 
 import { expect, test, describe, beforeEach, afterEach } from "bun:test";
 import { render, waitFor, act } from "@testing-library/react";
