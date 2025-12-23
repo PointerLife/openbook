@@ -57,19 +57,22 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                 id: 'sidebar-search',
                 title: 'Knowledge Base Search',
                 description: 'Quickly find any previous conversation, journal entry, or saved note across your entire library.',
-                targetId: 'sidebar-search-trigger'
+                targetId: 'sidebar-search-trigger',
+                order: 1
             });
             registerStep({
                 id: 'personalization',
                 title: 'Personalization & Identity',
                 description: 'Configure your custom system prompt, switch themes, and manage your AI preferences here.',
-                targetId: 'sidebar-settings-trigger'
+                targetId: 'sidebar-settings-trigger',
+                order: 7
             });
             registerStep({
                 id: 'data-control',
                 title: 'Privacy & Data Control',
                 description: 'Your data is stored locally. Use this to permanently clear all local information and reset the application.',
-                targetId: 'sidebar-clear-storage-trigger'
+                targetId: 'sidebar-clear-storage-trigger',
+                order: 8
             });
         }
     }, [isOpen, registerStep]);

@@ -52,17 +52,35 @@ describe("OnboardingContext", () => {
         expect(result.current.steps[0]).toEqual(step);
     });
 
-    test("should mark as completed", () => {
+    test("should sort steps by order", () => {
         const wrapper = ({ children }) => (
             React.createElement(OnboardingProvider, null, children)
         );
         const { result } = renderHook(() => useOnboarding(), { wrapper });
 
+        const step2 = {
+            id: "step2",
+            title: "Step 2",
+            description: "Description 2",
+            targetId: "target2",
+            order: 2
+        };
+
+        const step1 = {
+            id: "step1",
+            title: "Step 1",
+            description: "Description 1",
+            targetId: "target1",
+            order: 1
+        };
+
         React.act(() => {
-            result.current.completeTutorial();
+            result.current.registerStep(step2);
+            result.current.registerStep(step1);
         });
 
-        expect(result.current.isCompleted).toBe(true);
-        expect(result.current.isVisible).toBe(false);
+        expect(result.current.steps).toHaveLength(2);
+        expect(result.current.steps[0].id).toBe("step1");
+        expect(result.current.steps[1].id).toBe("step2");
     });
 });

@@ -8,6 +8,7 @@ export interface OnboardingStep {
     title: string;
     description: string;
     targetId: string; // ID of the DOM element to highlight
+    order?: number; // Optional order for sorting steps
 }
 
 interface OnboardingContextType {
@@ -57,7 +58,9 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
         setSteps((prev) => {
             // Check if step already exists
             if (prev.find((s) => s.id === step.id)) return prev;
-            return [...prev, step];
+            const newSteps = [...prev, step];
+            // Sort by order if present, default to 999 if not
+            return newSteps.sort((a, b) => (a.order ?? 999) - (b.order ?? 999));
         });
     }, []);
 

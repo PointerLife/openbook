@@ -124,31 +124,36 @@ const HomeContent = () => {
             id: 'chat-input',
             title: 'Welcome to OpenBook',
             description: 'This is your smart chat input. You can type natural language questions or use / commands to unlock powerful research tools.',
-            targetId: 'chat-input-container'
+            targetId: 'chat-input-container',
+            order: 2
         });
         registerStep({
             id: 'model-switching',
             title: 'Model Switching',
             description: 'Type /model or use the dropdown to switch between different AI models like GPT-4, Claude, or local LLMs.',
-            targetId: 'chat-input-container'
+            targetId: 'chat-input-container',
+            order: 3
         });
         registerStep({
             id: 'study-frameworks',
             title: 'Study Frameworks',
             description: 'Type / to access study modes like Socratic Tutor, Feynman Technique, or Active Recall to enhance your learning.',
-            targetId: 'chat-input-container'
+            targetId: 'chat-input-container',
+            order: 4
         });
         registerStep({
             id: 'compacting',
             title: 'Compacting',
             description: 'Long conversation? Type /compact to summarize the chat and start a fresh context while keeping the history.',
-            targetId: 'chat-input-container'
+            targetId: 'chat-input-container',
+            order: 5
         });
         registerStep({
             id: 'daily-tools',
             title: 'Daily Learning Tools',
             description: 'Track your learning streak and get daily surprise prompts to keep your curiosity alive.',
-            targetId: 'onboarding-widgets-container'
+            targetId: 'onboarding-widgets-container',
+            order: 6
         });
     }, [registerStep]);
 
