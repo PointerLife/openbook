@@ -29,7 +29,7 @@ const TestScenario = () => {
             targetId: 'target1'
         });
         startTutorial();
-    }, []);
+    }, [registerStep, startTutorial]);
 
     return React.createElement(TooltipCard);
 };

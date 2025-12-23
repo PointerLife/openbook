@@ -32,6 +32,10 @@ export function TooltipCard() {
                     if (left + tooltipRect.width > window.innerWidth) {
                         left = window.innerWidth - tooltipRect.width - 24;
                     }
+
+                    // Clamp left to safe minimum
+                    left = Math.max(left, 12);
+
                     if (top + tooltipRect.height > window.innerHeight) {
                          // Flip to top if not enough space below
                          top = rect.top - tooltipRect.height - 12;

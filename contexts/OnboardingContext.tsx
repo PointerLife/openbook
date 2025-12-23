@@ -38,7 +38,11 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
     }, []);
 
     const nextStep = useCallback(() => {
-        setActiveStep((prev) => Math.min(prev + 1, steps.length - 1));
+        setActiveStep((prev) => {
+            if (steps.length === 0) return 0;
+            const maxIndex = Math.max(0, steps.length - 1);
+            return Math.min(prev + 1, maxIndex);
+        });
     }, [steps.length]);
 
     const prevStep = useCallback(() => {
