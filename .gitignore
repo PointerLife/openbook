@@ -15,3 +15,4 @@ trash/
 # macOS system files
 .DS_Store
 .env*.local
+conductor/setup_state.json
