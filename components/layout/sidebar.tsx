@@ -54,9 +54,9 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         type: 'journal' | 'space';
     } | null>(null);
     const [showClearStorageConfirm, setShowClearStorageConfirm] = useState(false);
-    const { notebooks, createNotebook } = useNotebooks();
-    const { entries, deleteEntry } = useJournal();
-    const { spaces, switchSpace, deleteSpace, currentSpaceId } = useSpaces();
+    const { notebooks, createNotebook, currentNotebookId } = useNotebooks();
+    const { entries, deleteEntry, createEntry } = useJournal();
+    const { spaces, switchSpace, deleteSpace, currentSpaceId, createSpace } = useSpaces();
     const router = useRouter();
     const pathname = usePathname();
 
@@ -110,6 +110,37 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
     // Update handleCreateNotebook
     const handleCreateNotebook = () => {
         createNotebook();
+    };
+
+    const [showCreateMenu, setShowCreateMenu] = useState(false);
+
+    const handleCreateJournal = () => {
+        const defaultTitle = 'Untitled';
+        // Use current notebook or fall back to the first one (usually Default)
+        const targetNotebookId = currentNotebookId || (notebooks.length > 0 ? notebooks[0].id : undefined);
+
+        const newEntry = createEntry(defaultTitle, targetNotebookId);
+
+        if (newEntry) {
+            setEditingJournalId(newEntry.id);
+            setEditingJournalTitle(defaultTitle);
+            router.push(`/journal/${newEntry.id}`);
+        }
+    };
+
+    const handleCreateSpace = () => {
+        const defaultTitle = 'Untitled';
+        // Use current notebook or fall back to the first one (usually Default)
+        const targetNotebookId = currentNotebookId || (notebooks.length > 0 ? notebooks[0].id : undefined);
+
+        const newSpaceId = createSpace(defaultTitle, targetNotebookId);
+
+        if (newSpaceId) {
+            setEditingSpaceId(newSpaceId);
+            // We don't have a space name state at this level to set easily like journal title, 
+            // but the space will be created with default title "Untitled"
+            router.push(`/space/${newSpaceId}`);
+        }
     };
 
     // Update clearLocalStorage function to use the custom modal
@@ -170,13 +201,49 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
                                     OpenBook
                                 </span>
                             </div>
-                            <button
-                                onClick={handleCreateNotebook}
-                                aria-label="New notebook"
-                                className="h-7 w-7 flex items-center justify-center rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors"
-                            >
-                                <Plus className="h-4 w-4 text-emerald-500" />
-                            </button>
+                            <div className="relative">
+                                <button
+                                    onClick={() => setShowCreateMenu(!showCreateMenu)}
+                                    aria-label="Create new..."
+                                    className={cn(
+                                        "h-7 w-7 flex items-center justify-center rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors",
+                                        showCreateMenu && "bg-neutral-100 dark:bg-neutral-800"
+                                    )}
+                                >
+                                    <Plus className="h-4 w-4 text-emerald-500" />
+                                </button>
+
+                                {showCreateMenu && (
+                                    <>
+                                        <div
+                                            className="fixed inset-0 z-40"
+                                            onClick={() => setShowCreateMenu(false)}
+                                        />
+                                        <div className="absolute right-0 top-full mt-1 w-48 bg-white dark:bg-neutral-900 rounded-md shadow-lg border border-neutral-200 dark:border-neutral-800 py-1 z-50 animate-in fade-in zoom-in-95 duration-100">
+                                            <button
+                                                onClick={() => {
+                                                    handleCreateJournal();
+                                                    setShowCreateMenu(false);
+                                                }}
+                                                className="w-full text-left px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center gap-2"
+                                            >
+                                                <PenLine className="h-4 w-4" />
+                                                <span>New Journal</span>
+                                            </button>
+                                            <button
+                                                onClick={() => {
+                                                    handleCreateSpace();
+                                                    setShowCreateMenu(false);
+                                                }}
+                                                className="w-full text-left px-4 py-2 text-sm text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center gap-2"
+                                            >
+                                                <MessageSquare className="h-4 w-4" />
+                                                <span>New Space</span>
+                                            </button>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
                         </div>
 
                         {/* Search button styled like the original input */}
