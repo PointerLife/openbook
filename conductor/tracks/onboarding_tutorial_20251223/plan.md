@@ -7,8 +7,8 @@
 - [x] Task: Conductor - User Manual Verification 'Foundation & State Management' (Protocol in workflow.md)
 
 ## Phase 2: UI Components
-- [ ] Task: Design and build the `OnboardingOverlay` component (backdrop and spotlight effect).
-- [ ] Task: Create the `TooltipCard` component for displaying the explanation text and navigation buttons ("Next", "Skip").
+- [x] Task: Design and build the `OnboardingOverlay` component (backdrop and spotlight effect). [f14e269]
+- [~] Task: Create the `TooltipCard` component for displaying the explanation text and navigation buttons ("Next", "Skip").
 - [ ] Task: Implement smooth Framer Motion animations for the overlay and tooltip transitions.
 - [ ] Task: Conductor - User Manual Verification 'UI Components' (Protocol in workflow.md)
 
