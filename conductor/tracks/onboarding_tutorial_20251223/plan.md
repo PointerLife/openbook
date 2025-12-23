@@ -23,6 +23,6 @@
 
 ## Phase 4: Polish & Review
 - [x] Task: Verify keyboard navigation and focus management for accessibility. [aeae8d2]
-- [~] Task: Test the "Skip" and "Complete" flows to ensure persistence works.
-- [ ] Task: Refine animations and visual styling to match product guidelines.
-- [ ] Task: Conductor - User Manual Verification 'Polish & Review' (Protocol in workflow.md)
+- [x] Task: Test the "Skip" and "Complete" flows to ensure persistence works. [705d7f0]
+- [x] Task: Refine animations and visual styling to match product guidelines. [705d7f0]
+- [x] Task: Conductor - User Manual Verification 'Polish & Review' (Protocol in workflow.md)
