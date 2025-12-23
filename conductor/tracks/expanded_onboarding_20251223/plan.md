@@ -7,7 +7,7 @@ Prepare the UI components by adding necessary DOM IDs for targeting by the onboa
 
 - [x] Task: Add DOM IDs to Chat Components [aecc7e5]
     - [ ] Add `id="onboarding-widgets-container"` to the `WidgetSection` wrapper in `app/(core)/ChatClient.tsx`.
-- [ ] Task: Add DOM IDs to Sidebar Components
+- [x] Task: Add DOM IDs to Sidebar Components [a56b4ae]
     - [ ] Add `id="sidebar-settings-trigger"` to the Settings button in `components/layout/sidebar.tsx`.
     - [ ] Add `id="sidebar-clear-storage-trigger"` to the Clear Storage button in `components/layout/sidebar.tsx`.
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Infrastructure & ID Preparation' (Protocol in workflow.md)
