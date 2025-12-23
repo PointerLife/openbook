@@ -150,12 +150,6 @@ const HomeContent = () => {
             description: 'Track your learning streak and get daily surprise prompts to keep your curiosity alive.',
             targetId: 'onboarding-widgets-container'
         });
-        registerStep({
-            id: 'sidebar-search',
-            title: 'Universal Search',
-            description: 'Looking for a specific note or a past conversation? Use the global search to find anything in your library instantly.',
-            targetId: 'sidebar-search-trigger'
-        });
     }, [registerStep]);
 
     // Auto-start tutorial for new users

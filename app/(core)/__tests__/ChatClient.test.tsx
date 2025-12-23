@@ -161,7 +161,7 @@ describe("ChatClient Onboarding Registration", () => {
     expect(stepIds).toContain('model-switching');
     expect(stepIds).toContain('study-frameworks');
     expect(stepIds).toContain('compacting');
-    expect(stepIds).toContain('daily-tools');
-    expect(stepIds).toContain('sidebar-search');
-  });
-});
+        expect(stepIds).toContain('daily-tools');
+        expect(stepIds).not.toContain('sidebar-search');
+      });
+    });
