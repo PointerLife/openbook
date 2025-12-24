@@ -66,20 +66,22 @@ export default function Header() {
 
                 {activeItem === 'company' && (
                   <div
-                    className="dropdown-layer absolute top-full left-0 mt-1 bg-popover/95 backdrop-blur-lg rounded-lg border shadow-lg p-4 w-[400px] z-50 grid gap-3"
+                    className="absolute top-full left-0 pt-2 w-[400px] z-50"
                   >
-                    <motion.div whileHover={hoverAnimation}>
-                      <Link href="/about" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
-                        <div className="text-sm font-medium">About</div>
-                        <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">Learn about our mission and values</div>
-                      </Link>
-                    </motion.div>
-                    <motion.div whileHover={hoverAnimation}>
-                      <Link href="/team" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
-                        <div className="text-sm font-medium">Team</div>
-                        <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">Meet the people behind OpenBook</div>
-                      </Link>
-                    </motion.div>
+                    <div className="dropdown-layer bg-popover/95 backdrop-blur-lg rounded-lg border shadow-lg p-4 grid gap-3">
+                      <motion.div whileHover={hoverAnimation}>
+                        <Link href="/about" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+                          <div className="text-sm font-medium">About</div>
+                          <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">Learn about our mission and values</div>
+                        </Link>
+                      </motion.div>
+                      <motion.div whileHover={hoverAnimation}>
+                        <Link href="/team" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+                          <div className="text-sm font-medium">Team</div>
+                          <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">Meet the people behind OpenBook</div>
+                        </Link>
+                      </motion.div>
+                    </div>
                   </div>
                 )}
               </div>
@@ -96,45 +98,47 @@ export default function Header() {
 
                 {activeItem === 'resources' && (
                   <div
-                    className="dropdown-layer absolute top-full left-0 mt-1 bg-popover/95 backdrop-blur-lg rounded-lg border shadow-lg p-4 w-[400px] z-50"
+                    className="absolute top-full left-0 pt-2 w-[400px] z-50"
                   >
-                    <div className="grid grid-cols-2 gap-3">
-                      <motion.div whileHover={hoverAnimation}>
-                        <Link href="https://github.com/yeswanth49/openbook" target="_blank" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
-                          <div className="flex items-center gap-2 text-sm font-medium">
-                            <Github className="h-4 w-4" />
-                            GitHub
-                          </div>
-                          <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">Check out our repo</div>
-                        </Link>
-                      </motion.div>
-                      <motion.div whileHover={hoverAnimation}>
-                        <Link href="https://x.com/Yeshh49" target="_blank" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
-                          <div className="flex items-center gap-2 text-sm font-medium">
-                            <Twitter className="h-4 w-4" />
-                            Twitter
-                          </div>
-                          <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">Follow for updates</div>
-                        </Link>
-                      </motion.div>
-                      <motion.div whileHover={hoverAnimation}>
-                        <Link href="https://discord.com/users/810347349418573825" target="_blank" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
-                          <div className="flex items-center gap-2 text-sm font-medium">
-                            <MessagesSquare className="h-4 w-4" />
-                            Discord
-                          </div>
-                          <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">Join our community</div>
-                        </Link>
-                      </motion.div>
-                      <motion.div whileHover={hoverAnimation}>
-                        <Link href="/chat" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
-                          <div className="flex items-center gap-2 text-sm font-medium">
-                            <MessageCircleIcon className="h-4 w-4" />
-                            Try Now
-                          </div>
-                          <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">Experience our chat</div>
-                        </Link>
-                      </motion.div>
+                    <div className="dropdown-layer bg-popover/95 backdrop-blur-lg rounded-lg border shadow-lg p-4">
+                      <div className="grid grid-cols-2 gap-3">
+                        <motion.div whileHover={hoverAnimation}>
+                          <Link href="https://github.com/yeswanth49/openbook" target="_blank" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+                            <div className="flex items-center gap-2 text-sm font-medium">
+                              <Github className="h-4 w-4" />
+                              GitHub
+                            </div>
+                            <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">Check out our repo</div>
+                          </Link>
+                        </motion.div>
+                        <motion.div whileHover={hoverAnimation}>
+                          <Link href="https://x.com/Yeshh49" target="_blank" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+                            <div className="flex items-center gap-2 text-sm font-medium">
+                              <Twitter className="h-4 w-4" />
+                              Twitter
+                            </div>
+                            <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">Follow for updates</div>
+                          </Link>
+                        </motion.div>
+                        <motion.div whileHover={hoverAnimation}>
+                          <Link href="https://discord.com/users/810347349418573825" target="_blank" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+                            <div className="flex items-center gap-2 text-sm font-medium">
+                              <MessagesSquare className="h-4 w-4" />
+                              Discord
+                            </div>
+                            <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">Join our community</div>
+                          </Link>
+                        </motion.div>
+                        <motion.div whileHover={hoverAnimation}>
+                          <Link href="/chat" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+                            <div className="flex items-center gap-2 text-sm font-medium">
+                              <MessageCircleIcon className="h-4 w-4" />
+                              Try Now
+                            </div>
+                            <div className="line-clamp-2 text-sm leading-snug text-muted-foreground">Experience our chat</div>
+                          </Link>
+                        </motion.div>
+                      </div>
                     </div>
                   </div>
                 )}
