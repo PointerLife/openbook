@@ -13,11 +13,11 @@ Remove every trace of the blog feature, including components, pages, routes, log
 - [x] Task: Update `components/landing/header.tsx` and `footer.tsx` (or `CombinedFooter.tsx`) to remove blog links [b1a0201]
 - [x] Task: Conductor - User Manual Verification 'UI & Component Removal' (Protocol in workflow.md) [8b3aa3a]
 
-## Phase 3: Route & Logic Removal
+## Phase 3: Route & Logic Removal [checkpoint: 9d32a63]
 - [x] Task: Delete blog-related pages in `app/` (e.g., `app/(pages)/blog` if it exists, or similar) [N/A]
 - [x] Task: Remove any blog-specific API routes in `app/api/` [N/A]
-- [ ] Task: Clean up blog-specific types in `lib/types.ts` or `types/`
-- [ ] Task: Conductor - User Manual Verification 'Route & Logic Removal' (Protocol in workflow.md)
+- [x] Task: Clean up blog-specific types in `lib/types.ts` or `types/` [N/A]
+- [x] Task: Conductor - User Manual Verification 'Route & Logic Removal' (Protocol in workflow.md) [9d32a63]
 
 ## Phase 4: Cleanup & Dependency Management
 - [ ] Task: Uninstall blog-exclusive dependencies using `bun remove`
