@@ -114,7 +114,7 @@ export default function LandingPage() {
                             <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
                                 <AnimateInView>
                                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 gradient-text">
-                                        Clarity in <span className="font-instrument-serif">Complexity</span>, Built for Learners
+                                        Clarity in <span className="font-instrument-serif">Complexity,</span><br />Built for Learners
                                     </h1>
                                     <p className="text-lg md:text-xl mb-8 text-muted-foreground max-w-2xl mx-auto">
                                         OpenBook is an AI-native notebook that helps you learn, retain, and apply knowledge more effectively than ever before.
