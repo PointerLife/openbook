@@ -149,13 +149,24 @@ export default function LandingPage() {
                             <div className="mt-12 mb-16">
                                 <AnimateInView>
                                     <div className="relative rounded-xl overflow-hidden border border-border/20 shadow-2xl">
-                                        <Image
-                                            src="/screenshots/graph.png"
-                                            alt="OpenBook Graph Interface"
-                                            width={1200}
-                                            height={675}
-                                            className="w-full h-auto"
-                                        />
+                                        <div className="dark:hidden">
+                                            <Image
+                                                src="/screenshots/white.png"
+                                                alt="OpenBook Graph Interface Light"
+                                                width={1200}
+                                                height={675}
+                                                className="w-full h-auto"
+                                            />
+                                        </div>
+                                        <div className="hidden dark:block">
+                                            <Image
+                                                src="/screenshots/graph.png"
+                                                alt="OpenBook Graph Interface Dark"
+                                                width={1200}
+                                                height={675}
+                                                className="w-full h-auto"
+                                            />
+                                        </div>
                                     </div>
                                 </AnimateInView>
                             </div>
