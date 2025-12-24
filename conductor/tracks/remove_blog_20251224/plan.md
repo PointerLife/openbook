@@ -19,8 +19,8 @@ Remove every trace of the blog feature, including components, pages, routes, log
 - [x] Task: Clean up blog-specific types in `lib/types.ts` or `types/` [N/A]
 - [x] Task: Conductor - User Manual Verification 'Route & Logic Removal' (Protocol in workflow.md) [9d32a63]
 
-## Phase 4: Cleanup & Dependency Management
-- [ ] Task: Uninstall blog-exclusive dependencies using `bun remove`
-- [ ] Task: Perform a full codebase search for "blog" to ensure no straggling references remain
-- [ ] Task: Verify the build passes with `bun run build`
-- [ ] Task: Conductor - User Manual Verification 'Cleanup & Dependency Management' (Protocol in workflow.md)
+## Phase 4: Cleanup & Dependency Management [checkpoint: 960af91]
+- [x] Task: Uninstall blog-exclusive dependencies using `bun remove` [N/A]
+- [x] Task: Perform a full codebase search for "blog" to ensure no straggling references remain [e7090a5]
+- [x] Task: Verify the build passes with `bun run build` [e7090a5]
+- [x] Task: Conductor - User Manual Verification 'Cleanup & Dependency Management' (Protocol in workflow.md) [960af91]
