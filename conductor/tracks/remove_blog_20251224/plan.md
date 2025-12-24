@@ -8,7 +8,7 @@ Remove every trace of the blog feature, including components, pages, routes, log
 - [x] Task: Conductor - User Manual Verification 'Discovery & Scoping' (Protocol in workflow.md) [3f8bdae]
 
 ## Phase 2: UI & Component Removal
-- [ ] Task: Remove blog components from `components/landing/` (`blog-section.tsx`, `blog-card.tsx`, `BlogPost.tsx`)
+- [x] Task: Remove blog components from `components/landing/` (`blog-section.tsx`, `blog-card.tsx`, `BlogPost.tsx`) [439e0f6]
 - [ ] Task: Remove references to the Blog section in `app/page.tsx`
 - [ ] Task: Update `components/landing/header.tsx` and `footer.tsx` (or `CombinedFooter.tsx`) to remove blog links
 - [ ] Task: Conductor - User Manual Verification 'UI & Component Removal' (Protocol in workflow.md)
