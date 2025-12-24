@@ -13,10 +13,12 @@ import { TestimonialsSection } from "@/components/landing/testimonials-section"
 import { CTASection } from "@/components/landing/cta-section"
 import AnimateInView from "@/components/landing/animate-in-view"
 
+import { LandingBackground } from "@/components/landing/landing-background"
 
 export default function LandingPage() {
     return (
         <Providers>
+            <LandingBackground />
 
             <div className="min-h-screen text-foreground overflow-x-hidden selection:bg-primary/20">
                 <Header />

@@ -9,11 +9,7 @@ import AnimateInView from "./animate-in-view"
 export function HeroSection() {
   return (
     <section className="relative overflow-hidden py-32 md:py-48 flex flex-col items-center justify-center min-h-[80vh]">
-      {/* Background gradients */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
-        <div className="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[100px]" />
-        <div className="absolute bottom-[-10%] right-[20%] w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[100px]" />
-      </div>
+      {/* Background gradients removed and moved to global LandingBackground */}
 
       <div className="container mx-auto px-4 md:px-6 z-10">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto space-y-8">
@@ -23,7 +19,7 @@ export function HeroSection() {
               Reimagining the way you learn
             </div>
           </AnimateInView>
-          
+
           <AnimateInView delay={0.2}>
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-foreground">
               Clarity in <span className="font-instrument-serif italic text-foreground/80">Complexity,</span>
