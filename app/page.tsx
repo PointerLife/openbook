@@ -135,7 +135,9 @@ export default function LandingPage() {
                         </div>
                     </section>
 
-                    <SectionSeparator />
+                    <AnimateInView>
+                        <SectionSeparator />
+                    </AnimateInView>
 
                     {/* Key Features Section */}
                     <section className="py-20 relative overflow-hidden">
@@ -173,7 +175,9 @@ export default function LandingPage() {
                         </div>
                     </section>
 
-                    <SectionSeparator />
+                    <AnimateInView>
+                        <SectionSeparator />
+                    </AnimateInView>
 
                     {/* Core Features Grid */}
                     <section className="py-20">
@@ -209,7 +213,9 @@ export default function LandingPage() {
                         </div>
                     </section>
 
-                    <SectionSeparator />
+                    <AnimateInView>
+                        <SectionSeparator />
+                    </AnimateInView>
 
                     {/* Interface Preview Section */}
                     <section className="relative overflow-hidden">
@@ -243,7 +249,9 @@ export default function LandingPage() {
                         </div>
                     </section>
 
-                    <SectionSeparator />
+                    <AnimateInView>
+                        <SectionSeparator />
+                    </AnimateInView>
                     {/* Natural Language Interaction */}
                     <section className="py-20">
                         <div className="container mx-auto px-4 md:px-6">
@@ -301,7 +309,9 @@ export default function LandingPage() {
                         </div>
                     </section>
 
-                    <SectionSeparator />
+                    <AnimateInView>
+                        <SectionSeparator />
+                    </AnimateInView>
 
                     {/* Productivity Benefits Section */}
                     <section className="py-20">
@@ -349,7 +359,9 @@ export default function LandingPage() {
                         </div>
                     </section>
 
-                    <SectionSeparator />
+                    <AnimateInView>
+                        <SectionSeparator />
+                    </AnimateInView>
 
                     {/* Blog Section */}
                     <section className="py-20">
@@ -372,7 +384,9 @@ export default function LandingPage() {
                         </div>
                     </section>
 
-                    <SectionSeparator />
+                    <AnimateInView>
+                        <SectionSeparator />
+                    </AnimateInView>
 
                     {/* Call to Action Section */}
                     <section className="py-20 relative overflow-hidden">
