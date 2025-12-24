@@ -20,3 +20,7 @@
 - Links point to `/blogs`, but no `app/blogs` or `app/(pages)/blogs` directory exists.
 - No dynamic route `[...slug]` seems to handle it either.
 - Conclusion: The blog feature appears to be partially implemented or previously removed, leaving behind these UI components and dead links.
+
+## Dependency Check Verification
+- Verified `package.json` vs imports.
+- Result: No exclusive dependencies found to remove. `next-mdx-remote` is a zombie import.
