@@ -4,7 +4,7 @@ Remove every trace of the blog feature, including components, pages, routes, log
 
 ## Phase 1: Discovery & Scoping
 - [x] Task: Identify all files related to the blog feature (components, pages, types, utils) [e50bebb]
-- [ ] Task: Identify npm dependencies used exclusively for the blog (check `package.json` and imports)
+- [x] Task: Identify npm dependencies used exclusively for the blog (check `package.json` and imports) [37ac449]
 - [ ] Task: Conductor - User Manual Verification 'Discovery & Scoping' (Protocol in workflow.md)
 
 ## Phase 2: UI & Component Removal
