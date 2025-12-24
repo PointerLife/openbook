@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useParams } from 'next/navigation';
-import Home from '@/app/(core)/page';
+import Home from '@/app/(core)/chat/page';
 import { useSpaces } from '@/contexts/SpacesContext';
 
 export default function SpacePage() {
