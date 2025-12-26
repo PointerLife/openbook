@@ -8,15 +8,15 @@ This plan details the steps to replace the current Team page with a new, interac
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Preparation & Assets' (Protocol in workflow.md)
 
 ## Phase 2: Component Development
-- [ ] Task: Create `components/team/team-hero.tsx`.
+- [x] Task: Create `components/team/team-hero.tsx`.
     - Adapt logic from reference `hero.tsx`.
     - Implement dynamic age counter with 100ms interval.
     - Style using Tailwind CSS to match the reference layout (grid with profile image on left/center).
     - Add a primary CTA button (e.g., "Get in Touch") as requested.
-- [ ] Task: Write unit tests for `TeamHero` in `components/team/__tests__/team-hero.test.tsx`.
+- [x] Task: Write unit tests for `TeamHero` in `components/team/__tests__/team-hero.test.tsx`.
     - Verify age calculation updates.
     - Verify social links are rendered correctly.
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Component Development' (Protocol in workflow.md)
+- [~] Task: Conductor - User Manual Verification 'Phase 2: Component Development' (Protocol in workflow.md)
 
 ## Phase 3: Page Integration
 - [ ] Task: Update `app/team/page.tsx`.
