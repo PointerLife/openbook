@@ -1,215 +1,288 @@
 "use client"
 
-import { motion } from "framer-motion"
-import LottieAnimation from "@/components/ui/lottie-animation"
 import { cn } from "@/lib/utils"
-import SectionHeading from "./section-heading"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
-import { ArrowRight, Sparkles, Send } from "lucide-react"
+import { Mic, Plus, Users, Check } from "lucide-react"
+import { ReactNode } from "react"
 
-// --- Component: BentoCard ---
-interface BentoCardProps {
-    title: string
-    description: string
-    className?: string
-    children?: React.ReactNode
-    delay?: number
-}
-
-function BentoCard({ title, description, className = "", children, delay = 0 }: BentoCardProps) {
-    return (
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay }}
-            viewport={{ once: true }}
-            className={cn(
-                "group relative overflow-hidden rounded-3xl bg-card/50 border border-border/40 backdrop-blur-sm hover:bg-card/80 transition-all duration-500 flex flex-col",
-                className
-            )}
-        >
-            <div className="p-6 md:p-8 flex flex-col h-full z-10">
-                <h3 className="text-xl md:text-2xl font-bold mb-3">{title}</h3>
-                <p className="text-muted-foreground leading-relaxed mb-6 max-w-[90%]">{description}</p>
-                <div className="mt-auto w-full flex-grow flex items-center justify-center relative min-h-[150px]">
-                    {children}
-                </div>
-            </div>
-
-            {/* Subtle Gradient Background Effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-        </motion.div>
-    )
-}
-
-// --- Specific Feature Visuals ---
-
-// 1. Spaced Repetition Visual
-function SpacedRepetitionVisual() {
-    return (
-        <div className="w-full h-full flex items-center justify-center relative bg-background/30 rounded-xl border border-border/20 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-cyan-500/5" />
-            <LottieAnimation placeholderText="Clock / Repetition" className="w-32 h-32 opacity-80" />
-        </div>
-    )
-}
-
-// 2. Active Recall Visual
-function ActiveRecallVisual() {
-    return (
-        <div className="w-full h-full flex items-center justify-center relative bg-background/30 rounded-xl border border-border/20 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 to-orange-500/5" />
-            <LottieAnimation placeholderText="Spark / Brain" className="w-32 h-32 opacity-80" />
-        </div>
-    )
-}
-
-// 3. Concept Mapping Visual
-function ConceptMappingVisual() {
-    return (
-        <div className="w-full h-full flex items-center justify-center relative bg-background/30 rounded-xl border border-border/20 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5" />
-            <LottieAnimation placeholderText="Network / Graph" className="w-32 h-32 opacity-80" />
-        </div>
-    )
-}
-
-// 4. Knowledge Synthesis Visual
-function KnowledgeSynthesisVisual() {
-    return (
-        <div className="w-full h-full flex items-center justify-center relative bg-background/30 rounded-xl border border-border/20 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-teal-500/5" />
-            <LottieAnimation placeholderText="Magic / Alchemy" className="w-32 h-32 opacity-80" />
-        </div>
-    )
-}
-
-// --- Chat Input Component ---
-function ChatInputArea() {
-    const router = useRouter()
-    const [input, setInput] = useState("")
-    const [isFocused, setIsFocused] = useState(false)
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-        if (!input.trim()) return
-        router.push(`/chat?q=${encodeURIComponent(input)}`)
-    }
-
-    return (
-        <div className="w-full max-w-2xl mx-auto relative z-20">
-            <div className="text-center mb-6">
-                <h3 className="text-2xl font-semibold mb-2 flex items-center justify-center gap-2">
-                    <Sparkles className="w-5 h-5 text-primary" />
-                    <span>Talk to your notebook</span>
-                </h3>
-                <p className="text-muted-foreground">
-                    Ask questions, summarize notes, or brainstorm ideas instantly.
-                </p>
-            </div>
-
-            <motion.form
-                onSubmit={handleSubmit}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className={cn(
-                    "relative flex items-center w-full p-2 bg-background/80 backdrop-blur-md border rounded-2xl shadow-lg transition-all duration-300",
-                    isFocused ? "border-primary/50 shadow-primary/10 ring-2 ring-primary/10" : "border-border/60 hover:border-border"
-                )}
-            >
-                <input
-                    type="text"
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onFocus={() => setIsFocused(true)}
-                    onBlur={() => setIsFocused(false)}
-                    placeholder="What would you like to learn today?"
-                    className="flex-1 px-4 py-3 bg-transparent border-none outline-none text-base sm:text-lg placeholder:text-muted-foreground/60 w-full"
-                />
-                <button
-                    type="submit"
-                    className={cn(
-                        "p-3 rounded-xl flex items-center justify-center transition-all duration-200",
-                        input.trim()
-                            ? "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm"
-                            : "bg-muted text-muted-foreground cursor-not-allowed"
-                    )}
-                    disabled={!input.trim()}
-                >
-                    {input.trim() ? <Send className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
-                </button>
-            </motion.form>
-
-            {/* Decorative hints */}
-            <div className="flex flex-wrap items-center justify-center gap-2 mt-4 text-xs text-muted-foreground">
-                <span className="px-2 py-1 bg-muted/40 rounded-full border border-border/30">Summarize this page</span>
-                <span className="px-2 py-1 bg-muted/40 rounded-full border border-border/30">Create a quiz</span>
-                <span className="px-2 py-1 bg-muted/40 rounded-full border border-border/30">Explain quantum physics</span>
-            </div>
-        </div>
-    )
-}
 
 export function ProductivitySection() {
     return (
-        <section className="py-24 relative overflow-hidden">
+        <section className="w-full py-20 lg:py-32 bg-transparent relative overflow-hidden">
+            {/* Ambient Background Glows - Adjusted for Theme */}
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500/10 dark:bg-purple-500/20 blur-[100px] rounded-full pointer-events-none mix-blend-multiply dark:mix-blend-screen" />
+            <div className="absolute right-0 top-1/2 w-[500px] h-[500px] bg-blue-500/10 dark:bg-blue-500/20 blur-[120px] rounded-full pointer-events-none mix-blend-multiply dark:mix-blend-screen" />
+
             <div className="container mx-auto px-4 md:px-6 relative z-10">
-                <div className="mb-16 md:mb-24">
-                    <SectionHeading
-                        title="Learn smarter, not harder"
-                        description="Unlock your potential with tools designed to optimize how your brain processes and retains information."
-                    />
-                </div>
+                {/* Header Section */}
 
-                {/* Bento Grid Layout */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(280px,auto)]">
 
+                {/* Grid Layout */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-[1400px] mx-auto">
                     {/* Row 1 */}
+
+                    {/* Card 1: Create Tasks */}
                     <BentoCard
-                        title="Spaced Repetition"
-                        description="Optimize review times to maximize retention with smart scheduling."
-                        className="md:col-span-2"
+                        className="col-span-1"
                         delay={0.1}
+                        title="Create tasks."
+                        description="Schedule your personal events and todos."
                     >
-                        <SpacedRepetitionVisual />
+                        <div className="mt-4 space-y-3 relative">
+                            {/* Glow effect behind active item */}
+                            <div className="absolute top-8 left-0 right-0 h-10 bg-primary/5 blur-xl rounded-full" />
+
+                            {[
+                                { text: "Automated testing", checked: true, active: false },
+                                { text: "Initial Usability Assessment", checked: true, active: true },
+                                { text: "Updating the docs", checked: true, active: false }
+                            ].map((item, i) => (
+                                <div key={i} className={cn(
+                                    "flex items-center gap-3 px-4 py-2.5 rounded-xl border transition-all",
+                                    item.active
+                                        ? "bg-card border-primary/20 shadow-sm translate-x-1"
+                                        : "bg-muted/30 border-transparent opacity-60"
+                                )}>
+                                    <div className={cn(
+                                        "w-4 h-4 rounded-[4px] border flex items-center justify-center",
+                                        item.checked ? "bg-primary border-primary" : "border-muted-foreground/30"
+                                    )}>
+                                        {item.checked && <Check className="w-2.5 h-2.5 text-primary-foreground" />}
+                                    </div>
+                                    <span className="text-sm font-medium text-foreground">{item.text}</span>
+                                </div>
+                            ))}
+                        </div>
                     </BentoCard>
 
+                    {/* Card 2: Plan your work */}
                     <BentoCard
-                        title="Active Recall"
-                        description="Test yourself actively to strengthen neural pathways."
-                        className="md:col-span-1"
+                        className="col-span-1"
                         delay={0.2}
+                        title="Plan your work."
+                        description="Visualize your workday in your planner."
                     >
-                        <ActiveRecallVisual />
+                        <div className="relative mt-2 h-40 rounded-xl border border-border bg-muted/20 overflow-hidden p-3">
+                            <div className="flex gap-2 mb-3">
+                                <div className="h-1.5 w-1.5 rounded-full bg-red-400" />
+                                <div className="h-1.5 w-1.5 rounded-full bg-yellow-400" />
+                                <div className="h-1.5 w-1.5 rounded-full bg-green-400" />
+                            </div>
+
+                            {/* Calendar Event */}
+                            <div className="absolute top-8 left-3 right-3 p-3 rounded-lg bg-card border border-border shadow-sm z-10">
+                                <p className="text-xs text-muted-foreground mb-1">Discuss detailed project plans outlining tasks</p>
+                                <p className="text-[10px] text-muted-foreground/70 mb-2">1:00 - 01:30 pm</p>
+                                <div className="flex -space-x-1.5">
+                                    {[1, 2, 3].map(i => (
+                                        <div key={i} className="w-5 h-5 rounded-full bg-muted border border-card" />
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Background dim lines */}
+                            <div className="space-y-4 mt-6 opacity-10">
+                                <div className="h-[1px] w-full bg-foreground" />
+                                <div className="h-[1px] w-full bg-foreground" />
+                                <div className="h-[1px] w-full bg-foreground" />
+                            </div>
+                        </div>
+                    </BentoCard>
+
+                    {/* Circle Element: Date */}
+                    <div className="col-span-1 aspect-square relative flex items-center justify-center animate-fade-in-up [animation-delay:300ms]">
+                        {/* Glowing ring */}
+                        <div className="absolute inset-2 rounded-full border border-border bg-card overflow-hidden shadow-2xl dark:shadow-none dark:bg-muted/10">
+                            {/* Mesh/Grid Texture */}
+                            <div className="absolute inset-0 opacity-10 dark:opacity-20"
+                                style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, currentColor 1px, transparent 0)', backgroundSize: '10px 10px' }}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-br from-background/50 via-transparent to-transparent" />
+
+                            {/* Content */}
+                            <div className="absolute inset-0 flex flex-col items-center justify-center z-10">
+                                <span className="text-8xl font-bold text-foreground tracking-tighter">18</span>
+                                <span className="text-lg text-muted-foreground font-medium mt-[-5px]">February</span>
+                            </div>
+
+                            {/* Plus Button */}
+                            <button className="absolute bottom-6 right-6 w-12 h-12 rounded-full bg-foreground text-background border border-border/20 flex items-center justify-center hover:scale-105 transition-transform shadow-lg z-20 group">
+                                <Plus className="w-6 h-6 group-hover:rotate-90 transition-transform duration-300" />
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Card 3: Create with team */}
+                    <BentoCard
+                        className="col-span-1"
+                        delay={0.4}
+                        title="Create with team."
+                        description="Send DM and create group chat."
+                    >
+                        <div className="mt-4 space-y-4 flex flex-col justify-end h-full">
+                            {/* Message 1 */}
+                            <div className="self-end max-w-[90%] p-3 rounded-2xl rounded-tr-sm bg-primary/10 text-foreground text-xs font-medium shadow-sm relative group">
+                                <span className="text-[10px] text-muted-foreground block mb-1">@Mark</span>
+                                Their decision is very important.
+                                <div className="absolute -right-2 top-0 w-6 h-6 rounded-full bg-background border-2 border-primary/10 overflow-hidden"></div>
+                            </div>
+
+                            {/* Message 2 */}
+                            <div className="self-start max-w-[90%] p-3 rounded-2xl rounded-tl-sm bg-muted/50 border border-border text-foreground text-xs font-medium relative">
+                                <span className="text-[10px] text-orange-500 block mb-1">@John</span>
+                                Have they signed their contract yet?
+                            </div>
+
+                            {/* Input placeholder */}
+                            <div className="w-full h-8 rounded-full bg-muted/30 border border-border/50 flex items-center px-4">
+                                <div className="w-1 h-4 bg-muted-foreground/50 animate-pulse" />
+                            </div>
+                        </div>
                     </BentoCard>
 
                     {/* Row 2 */}
+
+                    {/* Card 4: Take notes (Bottom Left) */}
                     <BentoCard
-                        title="Concept Mapping"
-                        description="Visualize connections between complex ideas."
-                        className="md:col-span-1"
-                        delay={0.3}
+                        className="col-span-1 lg:row-start-2"
+                        delay={0.5}
+                        gradient="from-blue-500/5 via-transparent to-transparent"
+                        title="Take notes."
+                        description="Create documents to keep track of those documents"
                     >
-                        <ConceptMappingVisual />
+                        <div className="mt-auto pt-6">
+                            <div className="bg-muted/20 border border-border/50 rounded-xl p-4 space-y-3">
+                                <div className="text-xs text-muted-foreground font-medium px-1">Basic blocks</div>
+                                <div className="flex items-center gap-3 p-2 rounded-lg bg-card border border-border hover:bg-muted/50 transition-colors cursor-pointer group shadow-sm">
+                                    <div className="w-8 h-8 rounded bg-primary/10 flex items-center justify-center text-xs font-bold text-primary group-hover:scale-110 transition-transform">Aa</div>
+                                    <div>
+                                        <div className="text-xs font-medium text-foreground">Text</div>
+                                        <div className="text-[10px] text-muted-foreground">Embed a sub-page inside</div>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer opacity-60">
+                                    <div className="w-8 h-8 rounded bg-muted/50 flex items-center justify-center">
+                                        <div className="w-4 h-0.5 bg-muted-foreground"></div>
+                                    </div>
+                                    <div>
+                                        <div className="text-xs font-medium text-muted-foreground">To-do list</div>
+                                        <div className="text-[10px] text-muted-foreground">Track tasks with a to-do list</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </BentoCard>
 
+                    {/* Card 5: Sync in real time (Center Bottom - Span 2) */}
                     <BentoCard
-                        title="Knowledge Synthesis"
-                        description="Combine sources to create unique insights and summaries."
-                        className="md:col-span-2"
-                        delay={0.4}
+                        className="col-span-1 lg:col-span-2 lg:row-start-2 relative overflow-visible"
+                        delay={0.6}
+                        title="Sync in real time."
+                        description="Connect with your team instantly to monitor progress and track updates."
                     >
-                        <KnowledgeSynthesisVisual />
-                    </BentoCard>
-                </div>
+                        {/* Glow Effect under the card content */}
+                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2/3 h-1/2 bg-blue-500/10 blur-[60px] rounded-full pointer-events-none" />
 
-                {/* Chat Input Area - Below Grid */}
-                <div className="mt-20 md:mt-32">
-                    <ChatInputArea />
+                        <div className="h-48 flex items-center justify-center relative mt-6">
+                            {/* Central Mic Button */}
+                            <div className="relative z-20 group cursor-pointer">
+                                <div className="absolute inset-0 bg-background/50 blur-xl rounded-full group-hover:bg-background/80 transition-all duration-500" />
+                                <div className="w-20 h-20 rounded-full bg-card border border-border flex items-center justify-center relative shadow-lg group-hover:scale-105 transition-transform duration-300">
+                                    <Mic className="w-8 h-8 text-foreground" />
+                                </div>
+                            </div>
+
+                            {/* Floating Avatars */}
+                            {[
+                                { style: "top-10 left-20", char: "AN" },
+                                { style: "bottom-12 left-10", img: "https://github.com/shadcn.png" },
+                                { style: "top-8 right-24", char: "BM" },
+                                { style: "bottom-10 right-16", img: "https://i.pravatar.cc/150?u=a042581f4e29026704d" },
+                                { style: "top-1/2 right-4 -translate-y-1/2 scale-75 opacity-50", char: "JD" },
+                            ].map((avatar, i) => (
+                                <div key={i} className={cn("absolute w-10 h-10 rounded-full border border-border bg-card flex items-center justify-center overflow-hidden shadow-md", avatar.style)}>
+                                    {avatar.img ? (
+                                        <img src={avatar.img} alt="" className="w-full h-full object-cover" />
+                                    ) : (
+                                        <span className="text-[10px] font-medium text-muted-foreground">{avatar.char}</span>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </BentoCard>
+
+                    {/* Card 6: Manage Projects (Bottom Right) */}
+                    <BentoCard
+                        className="col-span-1 lg:row-start-2"
+                        delay={0.7}
+                        title="Manage Projects."
+                        description="Customize your workspace to fit the needs of your teams."
+                    >
+                        <div className="mt-8 relative h-full">
+                            {/* Mock CRM/Board UI */}
+                            <div className="absolute right-[-20px] top-0 w-[120%] bg-card rounded-l-xl border-l border-t border-b border-border p-4 shadow-xl">
+                                <div className="flex items-center gap-2 mb-4 border-b border-border/50 pb-2">
+                                    <div className="text-xs font-bold text-foreground">Marketing</div>
+                                    <div className="text-[10px] px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-500">Active</div>
+                                </div>
+
+                                <div className="bg-muted/30 rounded-lg p-3 shadow-sm mb-3 border border-border/50">
+                                    <div className="text-[10px] font-semibold text-foreground mb-1">Strategic digital campaign</div>
+                                    <div className="flex items-center gap-2 mt-2">
+                                        <Users className="w-3 h-3 text-muted-foreground" />
+                                        <span className="text-[10px] text-muted-foreground">6 members</span>
+                                        <div className="flex -space-x-1 ml-auto">
+                                            <div className="w-4 h-4 rounded-full bg-muted text-[6px] flex items-center justify-center text-muted-foreground border border-card">+2</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-2 opacity-50">
+                                    <div className="h-2 w-1/2 bg-muted/50 rounded" />
+                                    <div className="h-2 w-3/4 bg-muted/50 rounded" />
+                                </div>
+                            </div>
+                        </div>
+                    </BentoCard>
+
                 </div>
             </div>
         </section>
+    )
+}
+
+function BentoCard({
+    children,
+    className,
+    title,
+    description,
+    delay = 0,
+    gradient = "from-background/5 via-transparent to-transparent"
+}: {
+    children: ReactNode,
+    className?: string,
+    title: string,
+    description: string,
+    delay?: number,
+    gradient?: string
+}) {
+    return (
+        <div
+            className={cn(
+                "relative group overflow-hidden rounded-[2.5rem] bg-card/80 border border-border/50 p-8 flex flex-col justify-between h-[320px] shadow-sm hover:shadow-xl transition-all hover:border-border duration-500 animate-fade-in-up",
+                className
+            )}
+            style={{ animationDelay: `${delay}s` }}
+        >
+            {/* Inner Gradient */}
+            <div className={cn("absolute inset-0 bg-gradient-to-br opacity-50 pointer-events-none", gradient)} />
+
+            <div className="relative z-10 flex flex-col h-full">
+                <div className="mb-4">
+                    <h3 className="text-xl font-bold text-foreground mb-1.5">{title}</h3>
+                    <p className="text-sm text-muted-foreground font-light leading-snug">{description}</p>
+                </div>
+                {children}
+            </div>
+        </div>
     )
 }
