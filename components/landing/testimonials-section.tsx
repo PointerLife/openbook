@@ -116,7 +116,7 @@ const TestimonialCard = ({ testimonial }: { testimonial: typeof TESTIMONIALS[0] 
           <img
             src={`https://i.pravatar.cc/150?u=${testimonial.username}`}
             alt={testimonial.name}
-            className="h-10 w-10 rounded-full bg-secondary/50 object-cover border border-border/50"
+            className="h-10 w-10 rounded-full bg-secondary/50 object-cover border border-border/50 opacity-50"
           />
           <div className="flex flex-col">
             <div className="flex items-center gap-1">
