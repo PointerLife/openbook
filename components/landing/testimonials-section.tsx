@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import SectionHeading from "./section-heading"
 import { cn } from "@/lib/utils"
-import { Heart, MessageCircle, Repeat2, Share, BadgeCheck } from "lucide-react"
+import { BadgeCheck } from "lucide-react"
 
 const TESTIMONIALS = [
   {
@@ -135,23 +135,7 @@ const TestimonialCard = ({ testimonial }: { testimonial: typeof TESTIMONIALS[0] 
         {testimonial.text}
       </p>
 
-      <div className="flex items-center justify-between text-muted-foreground text-xs mt-1">
-        <div className="flex items-center gap-1.5 hover:text-blue-500 transition-colors cursor-pointer group">
-          <MessageCircle className="h-4 w-4 group-hover:scale-110 transition-transform" />
-          <span>{Math.floor(testimonial.likes / 10)}</span>
-        </div>
-        <div className="flex items-center gap-1.5 hover:text-green-500 transition-colors cursor-pointer group">
-          <Repeat2 className="h-4 w-4 group-hover:scale-110 transition-transform" />
-          <span>{testimonial.retweets}</span>
-        </div>
-        <div className="flex items-center gap-1.5 hover:text-pink-500 transition-colors cursor-pointer group">
-          <Heart className="h-4 w-4 group-hover:scale-110 transition-transform" />
-          <span>{testimonial.likes}</span>
-        </div>
-        <div className="flex items-center gap-1.5 hover:text-blue-500 transition-colors cursor-pointer group">
-          <Share className="h-4 w-4 group-hover:scale-110 transition-transform" />
-        </div>
-      </div>
+
     </div>
   )
 }
