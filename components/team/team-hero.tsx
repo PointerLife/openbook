@@ -39,10 +39,10 @@ export function TeamHero() {
   return (
     <section
       id="hero"
-      className="flex items-center justify-center px-8 md:px-16 lg:px-24 py-12 md:py-24"
+      className="flex items-center justify-center px-10 md:px-20 lg:px-32 py-12 md:py-24"
     >
-      <div className="max-w-6xl mx-auto w-full">
-        <div className="grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-6 md:gap-y-0 md:gap-x-8 lg:gap-x-12">
+      <div className="max-w-5xl mx-auto w-full">
+        <div className="grid grid-cols-[auto_1fr] items-center gap-x-6 gap-y-8 md:gap-y-0 md:gap-x-12 lg:gap-x-20">
           {/* Profile Image - Left Side */}
           <div className="flex-shrink-0 row-span-1 md:row-span-2 self-start md:self-center">
             <div className="opacity-0 animate-fade-in-up">
