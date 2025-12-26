@@ -70,7 +70,6 @@ export default function CombinedFooter() {
                   target="_blank"
                   className="flex items-center gap-2 text-sm text-neutral-900 dark:text-muted-foreground hover:text-foreground"
                 >
-                  <MessagesSquare className="h-4 w-4" />
                   Discord
                 </Link>
               </li>
@@ -79,7 +78,6 @@ export default function CombinedFooter() {
                   href="/chat"
                   className="flex items-center gap-2 text-sm text-neutral-900 dark:text-muted-foreground hover:text-foreground"
                 >
-                  <MessageCircleIcon className="h-4 w-4" />
                   Try Now
                 </Link>
               </li>
