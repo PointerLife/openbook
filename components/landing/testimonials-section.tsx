@@ -113,9 +113,11 @@ const TestimonialCard = ({ testimonial }: { testimonial: typeof TESTIMONIALS[0] 
     <div className="flex w-[350px] flex-col gap-4 rounded-xl border border-border/40 bg-card/50 p-5 shadow-sm backdrop-blur-sm hover:bg-card/80 transition-colors mx-4 select-none whitespace-normal">
       <div className="flex items-start justify-between">
         <div className="flex gap-3">
-          <div className={cn("flex h-10 w-10 items-center justify-center rounded-full text-white font-bold shadow-sm", testimonial.color)}>
-            {testimonial.avatar}
-          </div>
+          <img
+            src={`https://i.pravatar.cc/150?u=${testimonial.username}`}
+            alt={testimonial.name}
+            className="h-10 w-10 rounded-full bg-secondary/50 object-cover border border-border/50"
+          />
           <div className="flex flex-col">
             <div className="flex items-center gap-1">
               <span className="font-semibold text-sm text-foreground">{testimonial.name}</span>
