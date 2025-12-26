@@ -19,9 +19,9 @@ This plan details the steps to replace the current Team page with a new, interac
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Component Development' (Protocol in workflow.md)
 
 ## Phase 3: Page Integration
-- [ ] Task: Update `app/team/page.tsx`.
+- [x] Task: Update `app/team/page.tsx`.
     - Remove current `PageHero`, `teamMembers` map, and `CallToAction` section.
     - Import and render the new `TeamHero` component.
     - Ensure `Header`, `LandingBackground`, and `CombinedFooter` remain intact.
-- [ ] Task: Verify the full page layout and responsiveness.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Page Integration' (Protocol in workflow.md)
+- [~] Task: Verify the full page layout and responsiveness.
+- [~] Task: Conductor - User Manual Verification 'Phase 3: Page Integration' (Protocol in workflow.md)
