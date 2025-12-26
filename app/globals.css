@@ -358,10 +358,10 @@
   }
 
   .header-layer {
-    z-index: 50;
+    z-index: 500;
   }
 
   .dropdown-layer {
-    z-index: 55;
+    z-index: 550;
   }
 }

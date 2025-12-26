@@ -6,24 +6,26 @@ import { Button } from "@/components/ui/button"
 import { SectionSeparator } from "@/components/ui/section-separator"
 import { ArrowRight, Github, Mail, Globe } from "lucide-react"
 import Link from "next/link"
+import { Providers } from "@/app/(config)/providers"
 
 export default function AboutPage() {
     return (
-        <div className="min-h-screen text-foreground overflow-x-hidden selection:bg-primary/20">
-            <LandingBackground />
-            <Header />
+        <Providers>
+            <div className="min-h-screen text-foreground overflow-x-hidden selection:bg-primary/20">
+                <LandingBackground />
+                <Header />
 
-            <main>
-                <PageHero
-                    title="About Us"
-                    subtitle="Reimagining the way we capture, retain, and apply knowledge."
-                />
+                <main>
+                    <PageHero
+                        title="About Us"
+                        subtitle="Reimagining the way we capture, retain, and apply knowledge."
+                    />
 
-                <AnimateInView>
-                    <SectionSeparator />
-                </AnimateInView>
+                    <AnimateInView>
+                        <SectionSeparator />
+                    </AnimateInView>
 
-                {/* Mission Section */}
+                    {/* Mission Section */}
                 <section className="py-24 relative">
                     <div className="container mx-auto px-4 md:px-6">
                         <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
@@ -128,5 +130,6 @@ export default function AboutPage() {
 
             <CombinedFooter />
         </div>
+        </Providers>
     )
 }
