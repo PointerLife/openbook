@@ -12,7 +12,7 @@ const TESTIMONIALS = [
     avatar: "A",
     color: "bg-blue-500",
     text: "OpenBook has completely transformed how I study for my medical exams. The AI explanations are spot-on and save me hours of searching.",
-    time: "2h",
+
     likes: 245,
     retweets: 12,
   },
@@ -22,7 +22,7 @@ const TESTIMONIALS = [
     avatar: "P",
     color: "bg-green-500",
     text: "The graph view is unlike anything I've used before. Connecting ideas has never been this intuitive. Ideally, every student needs this tool.",
-    time: "4h",
+
     likes: 89,
     retweets: 5,
   },
@@ -32,7 +32,7 @@ const TESTIMONIALS = [
     avatar: "R",
     color: "bg-purple-500",
     text: "Finally, a notebook that actually helps me think. It's not just storage; it's an active partner in my research process.",
-    time: "6h",
+
     likes: 567,
     retweets: 89,
   },
@@ -42,7 +42,7 @@ const TESTIMONIALS = [
     avatar: "A",
     color: "bg-pink-500",
     text: "The aesthetic is just... chef's kiss. Clean, minimal, and functional. It makes me want to write more just to see it on the page.",
-    time: "8h",
+
     likes: 1203,
     retweets: 245,
   },
@@ -52,7 +52,7 @@ const TESTIMONIALS = [
     avatar: "V",
     color: "bg-yellow-500",
     text: "I recommend OpenBook to all my students. The ability to chat with your notes changes the game for comprehension and retention.",
-    time: "12h",
+
     likes: 45,
     retweets: 8,
   },
@@ -62,7 +62,7 @@ const TESTIMONIALS = [
     avatar: "S",
     color: "bg-indigo-500",
     text: "As a designer, I appreciate the attention to detail. The dark mode is perfect for late-night brainstorming sessions.",
-    time: "1d",
+
     likes: 334,
     retweets: 45,
   },
@@ -72,7 +72,7 @@ const TESTIMONIALS = [
     avatar: "A",
     color: "bg-red-500",
     text: "The way it handles context from multiple documents is impressive. It feels like having a second brain that actually works.",
-    time: "1d",
+
     likes: 789,
     retweets: 123,
   },
@@ -82,7 +82,7 @@ const TESTIMONIALS = [
     avatar: "M",
     color: "bg-teal-500",
     text: "Writing my thesis with OpenBook has been a breeze. The distraction-free interface keeps me focused on what matters.",
-    time: "2d",
+
     likes: 156,
     retweets: 23,
   },
@@ -92,7 +92,7 @@ const TESTIMONIALS = [
     avatar: "K",
     color: "bg-orange-500",
     text: "Simple, fast, and effective. The onboarding was smooth, and I was productive within minutes. Highly recommended.",
-    time: "3d",
+
     likes: 67,
     retweets: 9,
   },
@@ -102,7 +102,7 @@ const TESTIMONIALS = [
     avatar: "D",
     color: "bg-cyan-500",
     text: "I used to drown in PDFs. Now I swim through them. The semantic search is a lifesaver for finding specific details.",
-    time: "4d",
+
     likes: 445,
     retweets: 67,
   }
@@ -126,7 +126,7 @@ const TestimonialCard = ({ testimonial }: { testimonial: typeof TESTIMONIALS[0] 
                 <path d="M10.135 16.215L6.467 12.55l1.414-1.414 2.254 2.254 5.679-5.679 1.414 1.414-7.093 7.09z" fill="white" />
               </svg>
             </div>
-            <span className="text-xs text-muted-foreground">{testimonial.username} · {testimonial.time}</span>
+            <span className="text-xs text-muted-foreground">{testimonial.username}</span>
           </div>
         </div>
         <div className="text-muted-foreground/30 hover:text-primary/60 transition-colors">
