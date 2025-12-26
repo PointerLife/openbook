@@ -39,7 +39,7 @@ export function TeamHero() {
   return (
     <section
       id="hero"
-      className="flex items-center justify-center px-8 md:px-16 lg:px-24"
+      className="flex items-center justify-center px-8 md:px-16 lg:px-24 min-h-[85vh]"
     >
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-[auto_1fr] items-center gap-x-4 gap-y-6 md:gap-y-0 md:gap-x-8 lg:gap-x-12">
