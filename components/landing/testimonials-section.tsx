@@ -197,7 +197,7 @@ export function TestimonialsSection() {
   const secondRow = TESTIMONIALS.slice(5)
 
   return (
-    <section className="py-24 overflow-hidden bg-background relative z-10 border-t border-border/20">
+    <section className="py-24 overflow-hidden relative z-10 border-t border-border/20">
       <div className="container mx-auto px-4 md:px-6 mb-16">
         <SectionHeading
           title="Words of appreciation from our community"
@@ -205,14 +205,9 @@ export function TestimonialsSection() {
         />
       </div>
 
-      <div className="flex flex-col gap-6 relative">
-        {/* Gradient Masks */}
-        <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-20 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-20 pointer-events-none" />
-
+      <div className="flex flex-col gap-6 relative [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
         <MarqueeRow items={firstRow} direction="left" speed={70} />
         <MarqueeRow items={secondRow} direction="right" speed={80} />
-
       </div>
     </section>
   )
