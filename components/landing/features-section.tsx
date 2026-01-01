@@ -6,6 +6,7 @@ import SectionHeading from "./section-heading"
 import { motion } from "framer-motion"
 import LottieAnimation from "@/components/ui/lottie-animation"
 import { ChatCompactConfirmation } from "@/components/features/chat/chat-compact-confirmation"
+import { useIsSafari } from "@/hooks/use-is-safari"
 import { useState } from "react"
 
 // --- Component: BentoCard ---
@@ -18,13 +19,20 @@ interface BentoCardProps {
 }
 
 function BentoCard({ title, description, className = "", children, delay = 0 }: BentoCardProps) {
+  const isSafari = useIsSafari()
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay }}
+      initial={isSafari ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      whileInView={isSafari ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+      transition={isSafari ? { duration: 0 } : { duration: 0.5, delay }}
       viewport={{ once: true }}
-      className={`group relative overflow-hidden rounded-3xl bg-card/50 border border-border/40 backdrop-blur-sm hover:bg-card/80 transition-all duration-500 flex flex-col ${className}`}
+      className={`group relative overflow-hidden rounded-3xl bg-card/50 border border-border/40 backdrop-blur-sm hover:bg-card/80 transition-all duration-500 flex flex-col transform-gpu ${className}`}
+      style={{
+        WebkitMaskImage: '-webkit-radial-gradient(white, black)',
+        WebkitBackfaceVisibility: 'hidden',
+        MozBackfaceVisibility: 'hidden',
+      }}
     >
       <div className="p-6 md:p-8 flex flex-col h-full z-10">
         <h3 className="text-xl md:text-2xl font-bold mb-3">{title}</h3>
