@@ -7,9 +7,15 @@ interface ChatCompactConfirmationProps {
     onConfirm: () => void;
     onCancel: () => void;
     className?: string;
+    autoFocus?: boolean;
 }
 
-export function ChatCompactConfirmation({ onConfirm, onCancel, className = '' }: ChatCompactConfirmationProps) {
+export function ChatCompactConfirmation({
+    onConfirm,
+    onCancel,
+    className = '',
+    autoFocus = true
+}: ChatCompactConfirmationProps) {
     const containerRef = useRef<HTMLDivElement>(null);
 
     const handleKeyDown = useCallback(
@@ -23,11 +29,13 @@ export function ChatCompactConfirmation({ onConfirm, onCancel, className = '' }:
     );
 
     useEffect(() => {
-        containerRef.current?.focus();
-    }, []);
+        if (autoFocus) {
+            containerRef.current?.focus();
+        }
+    }, [autoFocus]);
 
     return (
-        <motion.div 
+        <motion.div
             ref={containerRef}
             tabIndex={-1}
             onKeyDown={handleKeyDown}
@@ -46,9 +54,9 @@ export function ChatCompactConfirmation({ onConfirm, onCancel, className = '' }:
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            transition={{ 
-                duration: 0.2, 
-                ease: [0.4, 0.0, 0.2, 1] 
+            transition={{
+                duration: 0.2,
+                ease: [0.4, 0.0, 0.2, 1]
             }}
         >
             <div className="p-2">

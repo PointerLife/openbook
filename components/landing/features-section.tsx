@@ -87,6 +87,7 @@ function ChatFeatureVisual() {
             onConfirm={() => { }}
             onCancel={() => { }}
             className="!static !bottom-auto !left-auto !mb-0"
+            autoFocus={false}
           />
         </div>
       </div>
