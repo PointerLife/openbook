@@ -183,16 +183,11 @@ export default function Header() {
             <ThemeToggle />
           </motion.div>
           <motion.div whileHover={buttonHoverAnimation}>
-            <Link target="_blank" href="https://cal.com/yeshh49">
-              <Button variant="ghost" className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:text-accent-foreground px-4 py-2 h-8">
-                Contact Us
-              </Button>
-            </Link>
           </motion.div>
           <motion.div whileHover={buttonHoverAnimation}>
             <Link href="/chat">
               <Button className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 h-8">
-                Sign In
+                Try Now
               </Button>
             </Link>
           </motion.div>
