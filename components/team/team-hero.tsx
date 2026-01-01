@@ -113,7 +113,7 @@ export function TeamHero() {
             <div className="opacity-0 animate-fade-in-up animate-delay-400">
               <div className="flex flex-wrap items-center justify-start gap-4 md:gap-6 mb-8">
                 <a
-                  href="https://x.com/Yeshh49"
+                  href="https://x.com/yswnth"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="X profile"
@@ -150,7 +150,7 @@ export function TeamHero() {
                   <Mail className="w-5 h-5 group-hover:drop-shadow-lg" />
                 </a>
               </div>
-              
+
               {/* CTA Button */}
               <div className="mb-4">
                 <Button asChild size="lg" className="rounded-full px-8 text-base font-semibold">

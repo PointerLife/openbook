@@ -136,7 +136,7 @@ export default function Header() {
                           </Link>
                         </motion.div>
                         <motion.div whileHover={hoverAnimation}>
-                          <Link href="https://x.com/Yeshh49" target="_blank" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
+                          <Link href="https://x.com/GoOpenBook" target="_blank" className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground">
                             <div className="flex items-center gap-2 text-sm font-medium">
                               <XIcon className="h-4 w-4" />
                               Twitter
@@ -168,7 +168,7 @@ export default function Header() {
                 )}
               </div>
               <motion.div whileHover={buttonHoverAnimation}>
-                <Link target="_blank" href="https://x.com/Yeshh49">
+                <Link target="_blank" href="https://x.com/GoOpenBook">
                   <Button variant="ghost" className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 hover:text-accent-foreground px-3 py-1.5 h-7">
                     Twitter
                   </Button>
@@ -250,7 +250,7 @@ export default function Header() {
               </motion.div>
               <motion.div whileHover={{ x: 2 }}>
                 <Link
-                  href="https://x.com/Yeshh49"
+                  href="https://x.com/GoOpenBook"
                   target="_blank"
                   className="flex items-center gap-2 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
                   onClick={() => setIsMenuOpen(false)}
