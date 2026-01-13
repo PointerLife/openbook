@@ -53,7 +53,7 @@ const ollama = createOpenAI({
 export const neuman = customProvider({
   languageModels: {
     'google-default': google('models/gemini-3-flash-preview'),
-    'openai-gpt-5-1': openai('gpt-5.1'),
+
     'google-gemma-3n': openrouter('google/gemma-3n-e2b-it:free'),
     'google-gemma-3-27b': openrouter('google/gemma-3-27b-it:free'),
     'google-gemini-3-flash': google('models/gemini-3-flash-preview'),
