@@ -41,16 +41,7 @@ const ALL_MODELS: ModelDef[] = [
         tier: 'premium',
         tags: ['openai', 'gpt', 'smart', 'fast']
     },
-    {
-        value: 'openai-gpt-5-1',
-        label: 'GPT 5.1',
-        description: 'High-intelligence flagship model for complex reasoning.',
-        provider: 'OpenAI',
-        capabilities: ['Reasoning', 'Complex Tasks'],
-        contextWindow: '128k',
-        tier: 'premium',
-        tags: ['openai', 'gpt', 'best', 'smart']
-    },
+
     {
         value: 'openai-gpt-5-nano',
         label: 'GPT 5 Nano',
