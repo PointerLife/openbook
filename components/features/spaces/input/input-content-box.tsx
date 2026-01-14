@@ -45,14 +45,9 @@ interface ChatInputProps {
     pickerPlacement?: 'top' | 'bottom';
 }
 
-// Derive the Active Recall command from the StudyFramework enum
-// Ensure the command is always lowercase
-const ACTIVE_RECALL_COMMAND = `/${StudyFramework.ActiveRecall.split('-')[0].toLowerCase()}` as const; // "/active"
-
 const BASE_COMMANDS: ChatCommand[] = [
     { id: '/model', label: 'AI model' },
     { id: '/frameworks', label: 'Study frameworks' },
-    { id: ACTIVE_RECALL_COMMAND, label: 'Active Recall' },
 ];
 
 // ---------------------------------------------------------------------------
@@ -151,12 +146,6 @@ export function ChatInput({
 
     const handleCommand = (cmd: string) => {
         switch (cmd) {
-            case ACTIVE_RECALL_COMMAND:
-                onGroupChange('active-recall');
-                onFrameworkSelect?.(StudyFramework.ActiveRecall);
-                toast.success('Active Recall activated');
-                onChange('');
-                break;
             case '/model':
             case '/frameworks':
                 // Handled by activeMenu state
