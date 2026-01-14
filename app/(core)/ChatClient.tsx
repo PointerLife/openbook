@@ -796,7 +796,7 @@ const HomeContent = () => {
                         className={`w-full max-w-[95%] xs:max-w-[90%] sm:max-w-2xl md:max-w-3xl lg:max-w-4xl space-y-2 sm:space-y-3 mx-auto transition-all duration-300 overflow-visible`}
                     >
                         {status === 'ready' && displayMessages.length === 0 && (
-                            <div className="text-center py-4 sm:py-6">
+                            <div className="text-center py-4 sm:py-6 mt-8 sm:mt-16">
                                 <h1 className="text-xl xs:text-2xl sm:text-3xl md:text-4xl mb-2 sm:mb-3 text-neutral-800 dark:text-neutral-100 font-syne!">
                                     What do you want to learn about?
                                 </h1>
