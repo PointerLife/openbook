@@ -186,7 +186,7 @@ export function TestimonialsSection() {
   const secondRow = TESTIMONIALS.slice(5)
 
   return (
-    <section className="py-24 overflow-hidden relative z-10 border-t border-border/20">
+    <section id="stories" className="py-24 overflow-hidden relative z-10 border-t border-border/20">
       <div className="container mx-auto px-4 md:px-6 mb-16">
         <SectionHeading
           title="Words of appreciation from our community"

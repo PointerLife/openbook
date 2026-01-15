@@ -40,9 +40,11 @@ export function CTASection() {
                     <ChevronRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <Button variant="outline" size="lg" className="h-12 px-8 rounded-full text-lg w-full sm:w-auto">
-                  View Demo
-                </Button>
+                <Link href="#stories">
+                  <Button variant="outline" size="lg" className="h-12 px-8 rounded-full text-lg w-full sm:w-auto">
+                    Read Stories
+                  </Button>
+                </Link>
               </div>
               <p className="mt-6 text-sm text-muted-foreground">
                 No credit card required. Free plan available.
