@@ -97,7 +97,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <head>
+            <body className={`${GeistSans.variable} ${syne.variable} ${instrumentSerif.variable} ${leagueSpartan.variable} font-sans antialiased`}>
                 {process.env.NODE_ENV === "development" && (
                     <Script
                         src="//unpkg.com/react-grab/dist/index.global.js"
@@ -106,8 +106,6 @@ export default function RootLayout({
                         data-enabled="true"
                     />
                 )}
-            </head>
-            <body className={`${GeistSans.variable} ${syne.variable} ${instrumentSerif.variable} ${leagueSpartan.variable} font-sans antialiased`}>
                 {children}
             </body>
         </html>
