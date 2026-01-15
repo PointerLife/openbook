@@ -134,7 +134,7 @@ export function TeamHero() {
                   <Linkedin className="w-5 h-5 group-hover:drop-shadow-lg" />
                 </a>
                 <a
-                  href="https://github.com/yeswanth49"
+                  href="https://github.com/yswnthm"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="GitHub profile"
